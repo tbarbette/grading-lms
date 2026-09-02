@@ -1,0 +1,33 @@
+Question
+========
+A system has a 32-bit physical address space and 4 KByte pages. The single-level page table of a user process holds: entry 0 frame 28 (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 33 (P=1, R/W=0, U=0), entry 3 frame 100 (P=1, R/W=0, U=1), entry 4 (P=0), entry 5 frame 4007 (P=1, R/W=0, U=1), entry 6 frame 712 (P=1, R/W=0, U=1), entry 7 frame 11 (P=1, R/W=0, U=1), entry 8 frame 214 (P=1, R/W=0, U=1).
+
+Give the accessed physical address, or -1 on error, for: (a) a read at 29484, (b) a write at 22371, (c) a read at 20390.
+
+(d) The CPU then reads 1 byte at 32924, 1 byte at 23041, 1 byte at 4120 and 256 bytes at 24576, from user level, the MMU sitting before the cache. Give the state of the initially empty 4-row 4-way cache with standard x86 cachelines.
+
+Solution
+========
+(a) 29484 = 7 x 4096 + 812. Entry 7 is present and readable, frame 11, so the physical address is 11 x 4096 + 812 = 45868.
+
+(b) 22371 = 5 x 4096 + 1891. Entry 5 has R/W=0, so a write is a protection fault: -1.
+
+(c) 20390 = 4 x 4096 + 4006. Entry 4 has P=0, so it is a page fault: -1.
+
+(d) x86 cachelines are 64 bytes, so the offset is 6 bits and with 4 rows the index is the next 2 bits.
+
+- 32924 = page 8, offset 92, frame 214, physical 876636. Its line starts at 876608, line number 13697, row 13697 mod 4 = 1.
+- 23041 = page 5, offset 2561, frame 4007, physical 16415233. Its line starts at 16415232, line number 256488, row 0.
+- 4120 = page 1, which has P=0: page fault, nothing is cached.
+- 24576 = page 6, offset 0, frame 712, physical 2916352. 256 bytes span four lines, at 2916352, 2916416, 2916480 and 2916544, whose line numbers 45568 to 45571 give rows 0, 1, 2 and 3.
+
+So row 0 holds two lines, 0xFA7A00 and 0x2C8000; row 1 holds 0xD60C0 and 0x2C8040; row 2 holds 0x2C8080; row 3 holds 0x2C80C0. No eviction occurs since the cache is 4-way.
+
+Meta-information
+================
+extype: string
+exsolution: 45868, -1, -1, then 6 lines cached
+exauthor: Tom Barbette
+expoints: 5
+exsection: Virtual memory
+extags: 2024-01|virtual-memory|caches

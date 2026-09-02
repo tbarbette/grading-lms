@@ -1,0 +1,42 @@
+Question
+========
+Using AVX2 or CUDA as you prefer, write a function that computes the dot product of two arrays of float of length n. You may assume n is a multiple of your vector width or block size and that the arrays are correctly aligned, but write such an assumption as a comment.
+
+Pay attention to the reduction step: explain briefly how the partial results are combined into the final scalar.
+
+Solution
+========
+An AVX2 version:
+
+    // Assumes n % 8 == 0 and that a and b are 32-byte aligned.
+    float dot(const float* a, const float* b, int n) {
+        __m256 acc = _mm256_setzero_ps();
+        for (int i = 0; i < n; i += 8) {
+            __m256 va = _mm256_load_ps(&a[i]);
+            __m256 vb = _mm256_load_ps(&b[i]);
+            acc = _mm256_fmadd_ps(va, vb, acc);   // acc += va * vb, lane by lane
+        }
+        // Reduction: acc holds 8 independent partial sums, one per lane.
+        // Fold the 256-bit register into 128 bits, then halve twice.
+        __m128 lo = _mm256_castps256_ps128(acc);
+        __m128 hi = _mm256_extractf128_ps(acc, 1);
+        lo = _mm_add_ps(lo, hi);            // 4 partial sums
+        lo = _mm_hadd_ps(lo, lo);           // 2
+        lo = _mm_hadd_ps(lo, lo);           // 1
+        return _mm_cvtss_f32(lo);
+    }
+
+The reduction is the part worth explaining. The loop does not produce one running sum but eight independent ones, one per lane, because each lane accumulates only the elements whose index is congruent to it modulo 8. They must be summed at the end, and it is done in log2(8) = 3 folding steps rather than by extracting the lanes one by one. Doing the reduction inside the loop would serialise on the accumulator and destroy the benefit.
+
+In CUDA the same idea appears twice: a per-thread partial sum, then a reduction in shared memory or with `__shfl_down_sync` within the warp, then one atomicAdd per block to combine the blocks.
+
+Note that floating point addition is not associative, so this result differs slightly from the naive sequential loop. That is expected and acceptable.
+
+Meta-information
+================
+extype: string
+exsolution: vector accumulator then log-step horizontal reduction
+exauthor: Tom Barbette
+expoints: 2
+exsection: SIMD
+extags: 2026-08|simd|project

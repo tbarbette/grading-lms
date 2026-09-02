@@ -1,0 +1,35 @@
+Question
+========
+For the reference string A B C D A B E A B C D E on a 3-element cache, only the eighth and the ninth accesses are hits.
+
+What is that cache hit rate?
+
+
+Answerlist
+----------
+* 2/12
+* 2/10
+* 10/12
+* 2/2
+
+Solution
+========
+There are 12 accesses in total and 2 of them are hits, so the hit rate is 2/12.
+
+Answerlist
+----------
+* 1. 2 hits out of the 12 accesses of the reference string.
+* 0. The denominator must be the total number of accesses, which is 12.
+* 0. 10/12 is the miss rate, not the hit rate.
+* 0. This would mean every access is a hit.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-09|caches

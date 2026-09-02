@@ -1,0 +1,25 @@
+Question
+========
+What is the average read time for a request to read one sector on a disk using 512 B sectors, 10000 rpm, 4 ms average (head) seek time, 300 MB/s transfer rate and 0.1 ms controller overhead, without any pending request?
+
+Decompose your answer.
+
+Solution
+========
+Four terms add up:
+
+- Controller overhead: 0.1 ms
+- Seek time: 4 ms
+- Rotational latency: half a revolution. One revolution is 60/10000 = 6 ms, so 3 ms on average.
+- Transfer: 512 B / 300 MB/s = about 0.0017 ms, negligible.
+
+Total is about 0.1 + 4 + 3 + 0.002 = 7.1 ms.
+
+Meta-information
+================
+extype: string
+exsolution: about 7.1 ms
+exauthor: Tom Barbette
+expoints: 4
+exsection: Storage
+extags: 2023-01|storage

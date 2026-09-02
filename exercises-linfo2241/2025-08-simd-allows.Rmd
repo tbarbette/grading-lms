@@ -1,0 +1,33 @@
+Question
+========
+What does SIMD allow?
+
+
+Answerlist
+----------
+* Multiple instructions on one data
+* One instruction on multiple data element
+* Different instructions on different cores
+* Parallelism accross threads
+
+Solution
+========
+SIMD stands for Single Instruction Multiple Data: one instruction is applied simultaneously to every element of a vector register.
+
+Answerlist
+----------
+* 0. That would be MISD, which has no practical implementation.
+* 1. This is the definition of Single Instruction Multiple Data.
+* 0. That is MIMD, i.e. multi-core or multi-threading.
+* 0. Thread level parallelism is MIMD, not SIMD.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: SIMD
+extags: 2025-08|simd

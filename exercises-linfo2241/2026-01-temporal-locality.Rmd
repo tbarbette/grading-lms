@@ -1,0 +1,33 @@
+Question
+========
+What is temporal locality in caching?
+
+
+Answerlist
+----------
+* An element in cache should not stay for long
+* An element recently accessed will likely be accessed again
+* An element close to another will likely be accessed again
+* The cache predicts future access with timestamp
+
+Solution
+========
+Temporal locality is about time: what you touched recently, you are likely to touch again soon. Spatial locality is the other principle, about addresses close to each other.
+
+Answerlist
+----------
+* 0. This is the opposite of what a cache exploits.
+* 1. This is the definition of temporal locality.
+* 0. This is spatial locality, not temporal locality.
+* 0. A cache does not predict the future; it exploits past behaviour.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2026-01|caches

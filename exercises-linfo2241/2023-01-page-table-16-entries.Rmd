@@ -1,0 +1,30 @@
+Question
+========
+A process runs on a CPU with a 32-bit address space and paged virtual memory with 4 KByte pages. The 16 first entries of its single-level page table are given, all other entries being unused. Entries 0, 1, 2, 5, 8, 9, 10, 11, 13, 14 and 15 are present, entry 9 holding frame 23 and entry 10 holding frame 9. Entries 13 and 14 have A=0, all other present entries have A=1, and no entry is dirty.
+
+(a) How many KBytes of RAM have been allocated for this process?
+(b) What is the physical address of the virtual address 0xA60C?
+(c) What is the best page to consider for swapping out?
+(d) What is the acronym of the component caching the conversion done in (b)?
+(e) With 16 KB huge pages, which pages could you silently replace by transparent huge pages, why, and what would it help?
+
+Solution
+========
+(a) 11 entries have P=1, so 11 x 4 KB = 44 KBytes.
+
+(b) 0xA60C has page number 0xA = 10 and offset 0x60C. Entry 10 holds frame 9, so the physical address is 9 x 4096 + 0x60C = 0x960C.
+
+(c) A page that is present, not accessed and not dirty: entry 13. It has never been accessed and is clean, so it can be discarded without any write back.
+
+(d) TLB, Translation Lookaside Buffer.
+
+(e) A 16 KB huge page covers 4 aligned consecutive 4 KB pages. The only aligned group where all four entries are present is 8, 9, 10, 11. Doing so replaces 4 TLB entries by one, which increases the TLB reach and shortens the walk. It is only silent if the four frames are made physically contiguous first, which is not the case here since the frames are 19, 23, 9 and 14.
+
+Meta-information
+================
+extype: string
+exsolution: 44 KB, 0x960C, page 13, TLB, pages 8-11
+exauthor: Tom Barbette
+expoints: 5
+exsection: Virtual memory
+extags: 2023-01|virtual-memory

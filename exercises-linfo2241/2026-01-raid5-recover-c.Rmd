@@ -1,0 +1,42 @@
+Question
+========
+You are using a RAID 5 of 3 disks and one of the disks has been lost. Recover the C disk from the following stripes, where (P) marks the parity block of the stripe.
+
+| A | B | C |
+|---|---|---|
+| 1 | 0 | ? (P) |
+| 1 (P) | 0 | ? |
+| 0 | 0 (P) | ? |
+| 1 | 1 | ? (P) |
+
+What is the content of C, from the first stripe to the last?
+
+
+Answerlist
+----------
+* 1100
+* 1000
+* 0110
+* 1101
+
+Solution
+========
+Stripe 1: C is parity, 1 xor 0 = 1. Stripe 2: A is parity, so C = A xor B = 1 xor 0 = 1. Stripe 3: B is parity, so C = A xor B = 0 xor 0 = 0. Stripe 4: C is parity, 1 xor 1 = 0.
+
+Answerlist
+----------
+* 1. Parity, then reconstruction, then reconstruction, then parity: 1, 1, 0, 0.
+* 0. Check stripe 2: with A as parity, C = A xor B = 1.
+* 0. Check stripe 1: C is the parity of 1 and 0.
+* 0. Check stripe 4: C is the parity of 1 and 1.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Storage
+extags: 2026-01|raid|converted-to-mcq

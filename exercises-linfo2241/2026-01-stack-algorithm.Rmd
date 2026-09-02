@@ -1,0 +1,33 @@
+Question
+========
+Which cache replacement algorithm is a stack algorithm?
+
+
+Answerlist
+----------
+* LFU
+* FIFO
+* OPTIMAL
+* LRU
+
+Solution
+========
+A stack algorithm has the property that the content of a cache of N entries is always included in the content of a cache of N+1 entries. As a consequence such an algorithm never suffers from Belady's anomaly, where increasing the cache size increases the number of misses. FIFO does suffer from it.
+
+Answerlist
+----------
+* 0. Not the example seen in the course for this property.
+* 0. FIFO is the classic counter-example: it suffers from Belady's anomaly.
+* 0. Not the example seen in the course for this property.
+* 1. The N most recently used elements are always a subset of the N+1 most recently used ones.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0001
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2026-01|caches

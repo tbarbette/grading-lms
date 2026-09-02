@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**RDMA**
+
+Solution
+========
+Remote Direct Memory Access. The network card writes directly into the memory of a remote machine, without involving the remote CPU. Its most important use is very low latency and low CPU overhead communication inside a datacenter.
+
+Meta-information
+================
+extype: string
+exsolution: RDMA
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

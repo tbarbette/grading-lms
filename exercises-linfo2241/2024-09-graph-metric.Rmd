@@ -1,0 +1,35 @@
+Question
+========
+A graph plots the maximum number of requests per second on the Y axis against the amount of resources given to the problem (e.g. CPU cores) on the X axis.
+
+What metric is this graph showing?
+
+
+Answerlist
+----------
+* Capacity
+* Non-convex performance
+* Throughput
+* Latency
+
+Solution
+========
+The quantity measured on the Y axis is a number of requests served per unit of time, which is the definition of throughput.
+
+Answerlist
+----------
+* 0. Capacity is a threshold read on the curve, it is not the metric being measured.
+* 0. This describes the shape of the curve, not the metric.
+* 1. Requests per second is a rate of served work, i.e. throughput.
+* 0. Latency would be a time per request, not requests per second.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Metrics
+extags: 2024-09|metrics|dataviz

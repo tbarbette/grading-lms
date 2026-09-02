@@ -1,0 +1,28 @@
+Question
+========
+A system has a 32-bit physical address space and 4 KByte pages. The page table holds: entry 0 frame 0x1C (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 0x21 (P=1, R/W=0, U=0), entry 3 frame 0x64 (P=1, R/W=0, U=1), entry 4 (P=0), entry 5 frame 0xFA7 (P=1, R/W=0, U=1), entry 6 frame 0x2C8 (P=1, R/W=0, U=1).
+
+Give the physical address in hexadecimal, or the reason for the error, for: (a) a read at 0x5086, (b) a write at 0x1001, (c) a read at 0x62C8. Then give the state of the empty 4-row 4-way TLB, and of the empty 4-way physically indexed cache, after a read at 0x5014.
+
+Solution
+========
+(a) 0x5086: page 5, offset 0x086, frame 0xFA7, present and readable, so 0xFA7086.
+
+(b) 0x1001: page 1 has P=0, so this is a page fault, the page is not present.
+
+(c) 0x62C8: page 6, offset 0x2C8, frame 0x2C8, so 0x2C82C8.
+
+TLB after reading 0x5014: page 5, row 5 mod 4 = 1, tag 5 div 4 = 1, frame 0xFA7. Row 1 holds tag 0x1 with frame 0xFA7, everything else empty.
+
+Cache after reading 0x5014: the MMU translates first, since the cache is physically indexed. 0x5014 is page 5 offset 0x014, so the physical address is 0xFA7014. With 64 byte lines the line starts at 0xFA7000 and covers 0xFA7000 to 0xFA703F. The line number is 0xFA7014 div 64 = 0x3E9C0, and modulo 4 gives row 0. So row 0 holds one line, tag 0x3E9C0 div 4 = 0xFA70, content the range 0xFA7000 to 0xFA703F.
+
+Note that the fetch brings the whole 64 byte line, not just the byte asked for.
+
+Meta-information
+================
+extype: string
+exsolution: 0xFA7086, page fault, 0x2C82C8, TLB row 1, cache row 0
+exauthor: Tom Barbette
+expoints: 4
+exsection: Virtual memory
+extags: 2025-01|virtual-memory|caches

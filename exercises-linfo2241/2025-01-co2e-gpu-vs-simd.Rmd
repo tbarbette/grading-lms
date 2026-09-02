@@ -1,0 +1,32 @@
+Question
+========
+A CUDA version gives a 25x improvement, the best SIMD version 5x. A GPU costs about 700 kg CO2e to manufacture and consumes about 80 W.
+
+Base parameters: a non-optimized version supports 100 req/s per server, the target is 100 000 req/s, a server costs 3000 kg CO2e and is replaced every 5 years, a normal server consumes 150 W, electricity in Belgium is 165 g CO2e/kWh.
+
+What is the total CO2e over 5 years of 365 days for both versions, ignoring scope 1?
+
+Solution
+========
+Five years is 43800 hours.
+
+GPU version: 100 x 25 = 2500 req/s per server, so 40 servers.
+  Manufacturing: 40 x (3000 + 700) = 148 000 kg.
+  Power: 40 x (150 + 80) = 9200 W, so 402 960 kWh, times 165 g = 66 488 kg.
+  Total: about 214 500 kg CO2e.
+
+SIMD version: 100 x 5 = 500 req/s per server, so 200 servers.
+  Manufacturing: 200 x 3000 = 600 000 kg.
+  Power: 200 x 150 = 30 000 W, so 1 314 000 kWh, times 165 g = 216 810 kg.
+  Total: about 816 800 kg CO2e.
+
+The GPU version is about 3.8 times better, and again manufacturing is the dominant term, so what matters is the number of machines, not the extra draw of the GPU.
+
+Meta-information
+================
+extype: string
+exsolution: GPU about 214.5 t, SIMD about 816.8 t, GPU better
+exauthor: Tom Barbette
+expoints: 4
+exsection: Sustainability
+extags: 2025-01|sustainability|co2e

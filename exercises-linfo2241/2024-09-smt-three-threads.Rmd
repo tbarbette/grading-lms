@@ -1,0 +1,23 @@
+Question
+========
+Three threads are given. Thread 1: A1 runs 4 cycles, A2 runs 2 cycles, A3 runs 1 cycle, A4 conflicts with A1 for a functional unit and runs 1 cycle, A5 runs 1 cycle. Thread 2: B1 runs 1 cycle, B2 depends on B1 and runs 1 cycle, B3 conflicts with B1 for a functional unit and runs 1 cycle, B4 runs 3 cycles. Thread 3: C1 runs 3 cycles, C2 depends on C1 and runs 1 cycle.
+
+Simulate in as few cycles as possible: (1) a non-superscalar CPU with 3 cores, each with two functional units and full out of order, a single thread per core; (2) a single SMT core with 3 functional units where different threads may run concurrently on the same cycle, without reordering.
+
+Solution
+========
+Case 1, one thread per core, so the three threads run in parallel and the answer is the longest single thread.
+Thread 1 has 4 + 2 + 1 + 1 + 1 = 9 cycles of work but two FUs and full reordering, so independent instructions overlap; A4 may not share a cycle with A1. Thread 2 is 1 + 1 + 1 + 3 = 6 cycles with B2 after B1 and B3 not with B1. Thread 3 is 3 + 1 = 4 cycles with C2 after C1. The critical path is thread 1, around 7 cycles once A2, A3 and A5 are overlapped with the long A1.
+
+Case 2, one core with 3 FUs shared by the three threads, no reordering. Each thread issues in order, but the three may issue in the same cycle, so the FUs stay busy: while thread 2 waits for B1 to produce its result for B2, threads 1 and 3 keep issuing. The total is bounded below by the longest single chain and by the total work divided by 3.
+
+Grade on the constraints: multi-cycle instructions occupy their FU for their whole duration, a dependent instruction starts only after its producer has completed, conflicting instructions never share a cycle, in case 1 a thread never leaves its core, and in case 2 no more than 3 instructions issue per cycle.
+
+Meta-information
+================
+extype: string
+exsolution: see model schedule
+exauthor: Tom Barbette
+expoints: 3
+exsection: CPU
+extags: 2024-09|cpu|smt

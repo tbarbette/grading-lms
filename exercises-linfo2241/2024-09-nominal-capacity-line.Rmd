@@ -1,0 +1,35 @@
+Question
+========
+On the classical capacity graph, the maximum number of requests per second is plotted against the amount of resources given to the problem. A dashed straight line extends the initial linear part of the curve.
+
+What is the name of that dashed line?
+
+
+Answerlist
+----------
+* Nominal capacity
+* Useable capacity
+* Knee capacity
+* Total capacity
+
+Solution
+========
+The dashed line is the ideal, linear scaling the system would reach in perfect conditions. That is the nominal capacity.
+
+Answerlist
+----------
+* 1. It is the maximum throughput achievable in ideal conditions, i.e. perfect linear scaling.
+* 0. The useable capacity is the throughput still respecting a response time bound, not the ideal line.
+* 0. The knee is a point on the real curve where the gain starts to decrease, not the ideal line.
+* 0. This is not one of the capacity definitions seen in the course.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Capacity
+extags: 2024-09|capacity

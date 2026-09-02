@@ -1,0 +1,23 @@
+Question
+========
+CUDA exposes a single-instruction multiple-thread hardware and programming model, which gives fine grained control but takes considerable effort to make perform well across GPU architectures. NVIDIA has added specialised hardware for tensors, Tensor Cores and Tensor Memory Accelerators, present in every new architecture. CUDA Tile abstracts them so that code stays compatible with current and future tensor core architectures. Its foundation is CUDA Tile IR, a virtual instruction set that lets developers write higher level code executed efficiently across GPU generations, while PTX ensures portability for SIMT programs.
+
+(a) Explain the problem on the x86 ISA that PTX and Tile IR solve, and give a specific x86 ISA extension example.
+(b) Why is Tile IR needed, why can we not just use standard SIMT CUDA coding?
+
+Solution
+========
+(a) On x86 the ISA is the contract, and it is frozen in the binary. When a new instruction set extension appears, existing binaries cannot use it: they were compiled against the old ISA, so they must be recompiled, and a binary compiled with the new one refuses to run on older machines. AVX-512 is the canonical example: code compiled for it does not run on a CPU that lacks it, and code compiled without it leaves the hardware idle, which is why software ships multiple code paths and dispatches at run time. SSE to AVX to AVX-512 is the same story repeated.
+
+PTX and Tile IR avoid this by not being the real ISA. They are a virtual instruction set kept in the shipped artifact, and the driver compiles them to the actual machine code of the GPU you happen to have. The binding to the hardware happens at install or load time rather than at compile time, so one artifact runs well on several generations.
+
+(b) SIMT code is written at the granularity of one thread and one element, so the mapping onto warps, shared memory and tensor cores is hardcoded by the programmer: tile sizes, staging through shared memory, the exact tensor core instruction. That is exactly what changes between generations, so a hand-tuned SIMT kernel is fast on the chip it was tuned for and mediocre on the next one. Tile IR raises the level: you say what to compute on a tile and let the compiler and runtime decide the mapping onto threads, the memory hierarchy and the tensor cores. The performance-critical decisions become the compiler's, and it can retarget them when the hardware changes.
+
+Meta-information
+================
+extype: string
+exsolution: virtual ISA vs frozen ISA, AVX-512, tile level abstraction
+exauthor: Tom Barbette
+expoints: 3
+exsection: GPU
+extags: 2026-01|gpu|isa

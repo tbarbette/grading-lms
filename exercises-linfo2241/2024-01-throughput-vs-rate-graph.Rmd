@@ -1,0 +1,29 @@
+Question
+========
+On a 2D graph with a throughput metric of your choice on the Y axis and a rate on the X axis, draw two lines showing the performance of a naive implementation of the project encrypting huge files of 262 KB, and of an optimized version.
+
+Indicate, for the optimized version, the knee capacity and the useable capacity on the graph. The trend of the curve should be realistic and the values approximately those observed in the project. The graph should follow all the standards seen about data visualization.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.0}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,1,99,99)
+arrows(12,10,94,10,length=.1); arrows(12,10,12,92,length=.1)
+text(53,5,"Offered rate (req/s)",cex=.8); text(6,50,"Throughput (req/s)",srt=90,cex=.8)
+```
+
+Solution
+========
+Both curves start on the diagonal, where the achieved throughput equals the offered rate, then bend and flatten once the server saturates. The optimized version follows the diagonal further and plateaus higher; the naive one leaves the diagonal early and plateaus low. With 262 KB files the plateau is bounded by the encryption throughput, so the naive version saturates at a few tens of requests per second and the optimized one a few times higher.
+
+On the optimized curve, the knee capacity is the rate at which the curve leaves its linear part, where the gain per extra unit of load starts to drop. The useable capacity is the rate that still respects the response time bound, and it sits at or before the knee, never after.
+
+Expected of the graph itself: both axes labelled with a unit, a legend naming the two versions, the two capacities marked with a vertical line and an annotation, and the ranges starting at zero.
+
+Meta-information
+================
+extype: string
+exsolution: two saturating curves, knee and useable marked
+exauthor: Tom Barbette
+expoints: 3
+exsection: Capacity
+extags: 2024-01|capacity|dataviz|project

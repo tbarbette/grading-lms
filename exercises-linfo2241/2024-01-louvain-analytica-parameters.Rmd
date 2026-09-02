@@ -1,0 +1,24 @@
+Question
+========
+You are using wrk to measure the number of requests per second and the latency of an HTTP(S) service, Louvain Analytica. It splits a given set of social media users by their interest: given users and hashtags, it returns one list of users per topic.
+
+Give a list of potential parameters, and underline the ones that should be factors for the study.
+
+Solution
+========
+Workload parameters: number of users in the request, number of hashtags, length of the user history considered, distribution of the users over the topics, size of the request body, cache hit ratio on already classified users.
+
+System parameters: number of CPU cores, amount of memory, classification algorithm, model size, TLS on or off, number of concurrent connections and threads in wrk, keep alive on or off.
+
+Factors, the ones worth varying, are those you expect to drive the cost: the number of users and the number of hashtags, because the classification is likely at least linear in the first and linear in the second, and the number of concurrent connections, because it is what drives the queueing. The rest is fixed and reported.
+
+The reasoning matters more than the list: a parameter becomes a factor when you expect it to move the metric.
+
+Meta-information
+================
+extype: string
+exsolution: users, hashtags, concurrency as factors
+exauthor: Tom Barbette
+expoints: 2
+exsection: Methodology
+extags: 2024-01|methodology

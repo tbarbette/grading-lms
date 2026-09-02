@@ -1,0 +1,32 @@
+Question
+========
+A video transcoding service has: `CODEC` in h264, h265, av1, vp9; `RESOLUTION` in 720p, 1080p, 4k; `THREADS` between 1 and 16; `HW_ACCEL` enabled or disabled. A generator submits 6 second clips and measures the latency of each job.
+
+(a) How many combinations would a full factorial design require?
+(b) Each test runs 45 seconds with 3 repetitions: total execution time?
+(c) Name an experimental design approach that avoids the full factorial while still drawing the important observations effectively.
+(d) Given importances `CODEC` 0.52, `RESOLUTION` 0.04, `THREADS` 0.41, what is `HW_ACCEL`?
+(e) What factors and levels should be kept in the final set, in alphabetical order?
+
+Solution
+========
+(a) 4 x 3 x 16 x 2 = 384 combinations.
+
+(b) 384 x 3 x 45 s = 51 840 s = 14.4 hours.
+
+(c) A one factor at a time sweep, or a fractional factorial design.
+
+(d) The importances sum to 1, so `HW_ACCEL` is 1 - 0.52 - 0.04 - 0.41 = 0.03.
+
+(e) Keep `CODEC` and `THREADS`, which is already alphabetical. Together they carry 0.93 of the importance, while `RESOLUTION` and `HW_ACCEL` are fixed at a representative value and reported. `CODEC` keeps its four levels; `THREADS` does not need all 16, a geometric subset such as 1, 2, 4, 8, 16 captures the scaling curve at a fifth of the cost.
+
+The final design must be a full factorial on those two, because how well a codec parallelises is very likely codec dependent, and that interaction is invisible to the screening design.
+
+Meta-information
+================
+extype: string
+exsolution: 384, 14.4 h, OAT, 0.03, CODEC and THREADS
+exauthor: Tom Barbette
+expoints: 3
+exsection: Methodology
+extags: 2026-08|methodology

@@ -1,0 +1,35 @@
+Question
+========
+A cache holding 3 elements receives the reference string A B C D A B E A B C D E. The observed pattern is a miss for every access except the eighth and the ninth, which are hits.
+
+What cache replacement algorithm produces this hit and miss pattern?
+
+
+Answerlist
+----------
+* LRU
+* FIFO
+* LIFO
+* LFU with ageing
+
+Solution
+========
+Simulating the string with 3 slots: LRU gives exactly 2 hits, on the second A and the second B. FIFO would additionally hit on the last E, so it does not match.
+
+Answerlist
+----------
+* 1. Least Recently Used gives 10 misses and 2 hits on this string, which is the observed pattern.
+* 0. FIFO would also hit on the final E, giving 3 hits instead of 2.
+* 0. LIFO would keep the oldest entries and produce a different pattern.
+* 0. Frequency based replacement produces a different pattern on this string.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-09|caches

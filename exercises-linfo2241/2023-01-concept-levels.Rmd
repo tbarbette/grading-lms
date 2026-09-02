@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**Levels**
+
+Solution
+========
+The set of values that a factor takes in the experiment. The number of combinations of a full factorial design is the product of the number of levels of every factor.
+
+Meta-information
+================
+extype: string
+exsolution: Levels
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

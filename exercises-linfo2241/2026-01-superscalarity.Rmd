@@ -1,0 +1,37 @@
+Question
+========
+What is superscalarity?
+
+
+Answerlist
+----------
+* A method that increases clock frequency by shortening the instruction pipeline
+* A technique where multiple instructions are executed sequentially in a single clock cycle
+* A technique using multiple ALUs to execute instructions in parallel
+* It allows multiple instructions to be issued and executed in parallel during the same clock cycle
+* A memory optimization technique that reduces cache misses by reordering data
+* A compiler optimization that transforms sequential code in multi-threaded code
+
+Solution
+========
+A superscalar CPU widens the pipeline: several instructions are issued and executed during the same clock cycle, which requires duplicating the execution units.
+
+Answerlist
+----------
+* 0. That describes a different design trade-off, not superscalarity.
+* 0. Sequentially in one cycle is a contradiction; superscalarity is parallel.
+* 1. Duplicated execution units are what makes the parallel issue possible.
+* 1. This is the definition of a superscalar processor.
+* 0. Unrelated to the pipeline.
+* 0. Superscalarity is a hardware property, not a compiler transformation.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 001100
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2026-01|cpu|pipeline

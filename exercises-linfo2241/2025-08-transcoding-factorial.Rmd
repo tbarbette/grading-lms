@@ -1,0 +1,32 @@
+Question
+========
+A video transcoding service has: `CODEC` in h264, h265, av1, vp9; `RESOLUTION` in 720p, 1080p, 4k; `THREADS` between 1 and 16; `HW_ACCEL` enabled or disabled. A generator submits 6 second clips and measures latency.
+
+(a) How many combinations would a full factorial design require?
+(b) Each test runs 45 seconds and we want 3 repetitions: total execution time?
+(c) Name an experimental design approach that avoids the full factorial.
+(d) How many combinations would that create, without repetition?
+(e) Given importances `CODEC` 0.52, `THREADS` 0.41, `ENCRYPTION`-like factors `RESOLUTION` 0.04 and `SCHEDULER`-like `HW_ACCEL` 0.05, what factors and levels should be kept in the final set?
+
+Solution
+========
+(a) 4 x 3 x 16 x 2 = 384 combinations.
+
+(b) 384 x 3 x 45 s = 51 840 s = 14.4 hours.
+
+(c) A one factor at a time sweep, or a fractional factorial design.
+
+(d) From a baseline, (4-1) + (3-1) + (16-1) + (2-1) + 1 = 22 combinations.
+
+(e) Keep `CODEC` with its four levels and `THREADS` with its levels, since together they carry 0.93 of the importance. Fix `RESOLUTION` and `HW_ACCEL` at a representative value and report it. Then run a full factorial on the two remaining factors, because the number of useful threads very plausibly depends on the codec, av1 parallelising quite differently from h264, and only a full factorial can expose that interaction.
+
+For `THREADS` there is no need to test all 16 values: a geometric subset such as 1, 2, 4, 8, 16 captures the shape at a fifth of the cost.
+
+Meta-information
+================
+extype: string
+exsolution: 384, 14.4 h, OAT, 22, keep CODEC and THREADS
+exauthor: Tom Barbette
+expoints: 3
+exsection: Methodology
+extags: 2025-08|methodology

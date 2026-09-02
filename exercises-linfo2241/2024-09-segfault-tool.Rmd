@@ -1,0 +1,33 @@
+Question
+========
+What tool will help you solve a segmentation fault?
+
+
+Answerlist
+----------
+* Iperf
+* Perf
+* GDB
+* Kernel
+
+Solution
+========
+A segmentation fault is a bug in the control flow or in the memory accesses of the program, so you need a debugger that shows you where it happened and with which values.
+
+Answerlist
+----------
+* 0. Iperf measures network throughput.
+* 0. Perf is a profiler; it tells you where time is spent, not why you crashed.
+* 1. A debugger gives you the faulting instruction, the backtrace and the values of the variables.
+* 0. The kernel reports the fault but is not a debugging tool.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Tooling
+extags: 2024-09|tooling

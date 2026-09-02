@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**Dirty flag in the page table**
+
+Solution
+========
+A bit set by the MMU when a page has been written to. Its most important use is reclaim: a clean page can simply be dropped, whereas a dirty page must be written back first.
+
+Meta-information
+================
+extype: string
+exsolution: Dirty flag in the page table
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

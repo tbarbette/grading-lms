@@ -1,0 +1,33 @@
+Question
+========
+According to Amdahl's law, speedup is fundamentally limited by what?
+
+
+Answerlist
+----------
+* Clock frequency
+* Memory capacity
+* The sequential portion of a program
+* Number of cache levels
+
+Solution
+========
+Whatever you do to the parallel part, the serial part still has to run. As the number of cores grows to infinity, the speedup tends to 1 divided by the serial fraction.
+
+Answerlist
+----------
+* 0. Amdahl's law is independent of the frequency.
+* 0. Amdahl's law does not model memory.
+* 1. The speedup is bounded by 1 divided by the fraction that cannot be parallelized.
+* 0. Amdahl's law does not model the cache hierarchy.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Parallelism
+extags: 2025-08|parallelism|amdahl

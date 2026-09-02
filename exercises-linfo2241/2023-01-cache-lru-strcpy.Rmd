@@ -1,0 +1,35 @@
+Question
+========
+The L1 cache of a CPU uses 256 byte cachelines and LRU replacement. It has 16 rows and 4 ways. Update the cache to the state after the following operations, and say what the address of Naboo is, knowing it sits in row 5 with tag 0xFFAC.
+
+    strcpy(0x10A000, "hello");
+    strcpy(0x20A000, "there");
+    strcpy(0x20A100, "general");
+    strcpy(0x20A107, " kenobi");
+    strcpy(0x30AF00, "alderaan");
+    strcpy(0x30BF00, "tatooine");
+    strcpy(0x30CF00, "kamino");
+    strcpy(0x30DF00, "coruscant");
+    strcpy(0x30EF00, "death star");
+
+Solution
+========
+With 256 byte lines the offset is 8 bits, and with 16 rows the index is the next 4 bits. So for an address, the row is bits 8 to 11 and the tag is everything above bit 12.
+
+- 0x10A000: row 0xA, tag 0x10A -> hello
+- 0x20A000: row 0xA, tag 0x20A -> there
+- 0x20A100: row 0xA1 truncated to 4 bits gives row 1, tag 0x20A -> general
+- 0x20A107 falls in the same line as 0x20A100, so it is a hit and overwrites at offset 7, giving general kenobi
+- 0x30AF00, 0x30BF00, 0x30CF00, 0x30DF00 all have row 0xF and tags 0x30A, 0x30B, 0x30C, 0x30D, filling the four ways of row 0xF
+- 0x30EF00 also maps to row 0xF, so LRU evicts the least recently used way, which is alderaan at tag 0x30A
+
+Naboo sits in row 5 with tag 0xFFAC, so its address is tag 0xFFAC shifted by 12, plus row 5 shifted by 8, that is 0xFFAC500.
+
+Meta-information
+================
+extype: string
+exsolution: 0xFFAC500, alderaan evicted
+exauthor: Tom Barbette
+expoints: 4
+exsection: Caches
+extags: 2023-01|caches

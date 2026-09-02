@@ -1,0 +1,33 @@
+Question
+========
+What sentences apply to a write-back mechanism in a cache?
+
+
+Answerlist
+----------
+* The content is written directly to memory
+* The content is written directly to cache
+* The advantage is that CPU does not have to wait for DDR to write
+* Multiple writes to the same place need to flush the cache to DDR each time
+
+Solution
+========
+With write-back the store lands in the cache and marks the line dirty. Memory is updated only when the line is finally evicted, so repeated writes to the same address cost a single memory write instead of one per store.
+
+Answerlist
+----------
+* 0. That is write-through, the other policy.
+* 1. The store updates the cache line and marks it dirty.
+* 1. The slow memory write is deferred to the eviction.
+* 0. This is exactly what write-back avoids; it is the drawback of write-through.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0110
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2026-01|caches

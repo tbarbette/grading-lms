@@ -1,0 +1,33 @@
+Question
+========
+What could be the C equivalent of the instruction 'set32 #1000, r0' followed by 'add32 #4, r0'?
+
+
+Answerlist
+----------
+* int a = 1000; a++;
+* int a = 1000; a+=4;
+* int* a = 1000; a++;
+* int* a = 1000; a += 4;
+
+Solution
+========
+The second instruction adds the constant 4 to the register. On an integer that is simply adding 4. On a pointer to int, incrementing by one already advances the address by sizeof(int), which is 4 bytes, so it compiles to the very same addition.
+
+Answerlist
+----------
+* 0. Incrementing an int adds 1, not 4.
+* 1. Adding 4 to an integer is exactly an add of the immediate 4.
+* 1. Pointer arithmetic scales by sizeof(int) = 4, so this also adds 4 to the address.
+* 0. This would advance the pointer by 4 times 4 = 16 bytes.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0110
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2025-01|cpu|isa

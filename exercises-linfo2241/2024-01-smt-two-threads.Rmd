@@ -1,0 +1,29 @@
+Question
+========
+Two threads X and Y run on a non-superscalar CPU with 2 cores, a single thread per core.
+
+Thread X: A1 takes 2 cycles; A2 conflicts with A1 for a functional unit; A3 has no dependence and takes 2 cycles; A4 depends on A3; A5 has no dependence.
+Thread Y: B1 takes 2 cycles; B2 conflicts with B1 for a functional unit; B3 depends on B2; B4 has no dependence and takes 2 cycles; B5 depends on A3.
+
+All other instructions take a single cycle. Write down the execution order with 2 functional units, (a) with out of order capabilities limited to running further instructions of the program without reordering them between themselves, and (b) with full reordering. Then do it for a single core fine grained multithreaded CPU with 2 FUs where only one thread may issue per cycle.
+
+Solution
+========
+The two things that drive the schedule are the conflicts, which forbid two given instructions in the same cycle even with two FUs, and the cross thread dependence of B5 on A3, which cannot be satisfied before A3 has completed on the other core.
+
+Without reordering, each core issues in program order and simply fills the second FU whenever the next instruction is independent and does not conflict. A1 occupies two cycles and A2 conflicts with it, so A2 cannot be paired with A1 and must wait. A4 must wait for A3 to finish, A3 itself taking two cycles.
+
+With reordering, the core is free to hoist an independent instruction into the slot that the conflict or the dependence would leave empty, for instance starting A3 early so that both A4 and, on the other core, B5 become ready sooner. This is what shortens the schedule.
+
+On the fine grained multithreaded core, the two FUs are still there but a single thread may issue in a given cycle, so the two threads alternate: whenever X stalls on a dependence, Y issues, which is exactly the point of the design. The total is longer than with two real cores but the FUs are much better used than with a single thread.
+
+Grade on the constraints being respected: no two conflicting instructions in the same cycle, no instruction before the one it depends on has completed, B5 after A3, and at most one thread per cycle in the last question.
+
+Meta-information
+================
+extype: string
+exsolution: see model schedule
+exauthor: Tom Barbette
+expoints: 3
+exsection: CPU
+extags: 2024-01|cpu|pipeline|smt

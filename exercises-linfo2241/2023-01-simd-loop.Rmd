@@ -1,0 +1,37 @@
+Question
+========
+The loop below has to be executed as efficiently as possible, X and Y being already allocated arrays of 32-bit integers.
+
+    for (i = 0; i < N; i++) {
+        X[i] = Y[i] + 200;
+    }
+
+(a) Write a faster pseudo assembly using a single core SISD CPU with no vector instruction. Instructions take two operands and may do a single memory access. Say for which multiple of N it holds, and why it is faster.
+(b) Given the reciprocal throughputs in the table, how many table elements can the pipeline serve per clock?
+(c) Write the same program using the SIMD instructions of the table. What is the expected speedup?
+
+Solution
+========
+(a) Unroll the loop, for instance by 4, so that N is a multiple of 4. Per element the body becomes a load, an add and a store, and the loop overhead of one compare, one jump and one increment is now paid once per four elements instead of once per element. It is faster because the overhead per useful operation drops and because the four independent chains give the pipeline more to overlap.
+
+(b) Per element the scalar version costs mov 0.5 + add 0.5 + mov 0.5 = 1.5 cycles, plus the amortized overhead of cmp 0.5, jmp 0.5 and inc 0.5, that is 1.5 spread over the unrolling factor. Unrolled by 4 that is 1.5 + 1.5/4 = 1.875 cycles per element, so about 0.53 element per clock.
+
+(c) With 256 bit vectors, 8 int32 are processed at a time:
+
+    _mm256_broadcast(200) -> v200        (once, outside the loop)
+    loop:
+      v = _mm256_load(Y + i)
+      v = _mm256_add(v, v200)
+      _mm256_store(X + i, v)
+      i += 8 ; cmp ; jl loop
+
+Per 8 elements: load 0.5 + add 1 + store 0.5 = 2 cycles, plus 1.5 of overhead, so 3.5 cycles for 8 elements, that is about 0.44 cycle per element, i.e. about 2.3 elements per clock. Compared to the 1.875 cycles of the scalar version the speedup is about 4x, well below the ideal 8x because the vector add has a reciprocal throughput of 1 instead of 0.5.
+
+Meta-information
+================
+extype: string
+exsolution: unroll, then AVX2, about 4x
+exauthor: Tom Barbette
+expoints: 5
+exsection: SIMD
+extags: 2023-01|simd

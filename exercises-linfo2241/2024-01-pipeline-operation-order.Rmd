@@ -1,0 +1,25 @@
+Question
+========
+Put the following operations in the order in which a CPU performs them, writing something like CDEAB.
+
+A) Write result
+B) Read operands
+C) Jump if the instruction was a jump
+D) Decode instruction
+E) Perform operation
+F) Fetch instruction
+
+Solution
+========
+The classical cycle is: fetch the instruction, decode it, read its operands, perform the operation, write the result back, and only then take the branch if it was one.
+
+Answer: FDBEAC
+
+Meta-information
+================
+extype: string
+exsolution: FDBEAC
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2024-01|cpu|pipeline

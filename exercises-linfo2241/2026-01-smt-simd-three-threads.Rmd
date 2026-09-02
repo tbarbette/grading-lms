@@ -1,0 +1,28 @@
+Question
+========
+Three threads run on a single SMT core with several general purpose functional units but only one SIMD-capable FU, which can only do SIMD. Different threads may run concurrently on the same cycle.
+
+Thread 1: A1 1 cycle SIMD; A2 2 cycles; A3 2 cycles; A4 depends on A2, 1 cycle; A5 1 cycle.
+Thread 2: B1 1 cycle SIMD; B2 depends on B1, 1 cycle; B3 depends on B1, 2 cycles; B4 depends on B2 and B3, 2 cycles SIMD.
+Thread 3: C1 1 cycle SIMD; C2 depends on C1, 2 cycles; C3 depends on C1, 2 cycles.
+
+Simulate (1) without reordering, at most one instruction per thread per cycle, with 4 FUs one of which is SIMD; (2) with reordering, 3 FUs one of which is SIMD, and up to 2 instructions of the same thread per cycle.
+
+Solution
+========
+The binding constraint is the single SIMD unit: A1, B1, C1 and B4 all need it and must therefore be serialised, one per cycle, whatever the number of general purpose FUs. That alone puts a floor on the schedule.
+
+Case 1, in order, one instruction per thread per cycle. The three SIMD heads A1, B1 and C1 cannot share a cycle, so they take three cycles between them; the order chosen matters, because B1 gates B2 and B3 which in turn gate B4, and C1 gates both C2 and C3. Issuing B1 first, then C1, then A1 shortens the critical path, since thread 2 has the longest dependent chain ending in a second SIMD instruction. Meanwhile the general purpose FUs are free to run A2 and A3 as soon as thread 1 has issued.
+
+Case 2, with reordering, only 3 FUs but 2 instructions of the same thread per cycle. Thread 1 can now issue A2 and A3 together since they are independent, and A5 can be hoisted ahead of A4, which is waiting for A2. The SIMD unit remains the bottleneck and B4 still cannot start before both B2 and B3 have completed.
+
+Grade on: never two SIMD instructions in the same cycle, multi-cycle instructions occupying their FU for their whole duration, every dependence respected, and the per-cycle issue limits of each variant.
+
+Meta-information
+================
+extype: string
+exsolution: see model schedule, single SIMD FU is the bottleneck
+exauthor: Tom Barbette
+expoints: 3
+exsection: CPU
+extags: 2026-01|cpu|smt|simd

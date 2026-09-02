@@ -1,0 +1,28 @@
+Question
+========
+A system has a 32-bit physical address space and 16 MByte pages. The page table holds: entry 0 frame 0x1C (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 0x21 (P=1, R/W=0, U=1), entry 3 frame 0x64 (P=1, R/W=0, U=1), entry 4 (P=0), entry 5 frame 0xFC (P=1, R/W=0, U=1), entry 6 frame 0x2C (P=1, R/W=0, U=0).
+
+Give the physical address in hexadecimal, or the reason for the error, for (a) a read at 0x05C5EA2E, (b) a write at 0x01B6D0C4, (c) a write at 0x02F4F6BB. Then give the TLB after reads at 0x05C5EA2E and 0x0315AE42.
+
+Solution
+========
+With 16 MB pages the offset is 24 bits and the page number the top 8 bits.
+
+(a) 0x05C5EA2E: page 0x05, offset 0xC5EA2E. Entry 5 is present, readable, user accessible, frame 0xFC. Physical address = 0xFC shifted by 24, plus the offset, that is 0xFCC5EA2E.
+
+(b) 0x01B6D0C4: page 0x01, P=0. Page fault, the page is not present.
+
+(c) 0x02F4F6BB: page 0x02, offset 0xF4F6BB, but entry 2 has R/W=0 and this is a write. Protection fault, the page is read only.
+
+TLB, 4 rows and 4 ways. First access, page 0x05: row 5 mod 4 = 1, tag 5 div 4 = 1, frame 0xFC. Second access 0x0315AE42, page 0x03: row 3 mod 4 = 3, tag 3 div 4 = 0, frame 0x64.
+
+So row 1 holds tag 0x1 with frame 0xFC, row 3 holds tag 0x0 with frame 0x64, and rows 0 and 2 stay empty. No eviction, since each lands in a different row and the TLB is 4-way.
+
+Meta-information
+================
+extype: string
+exsolution: 0xFCC5EA2E, page fault, protection fault, TLB rows 1 and 3
+exauthor: Tom Barbette
+expoints: 4
+exsection: Virtual memory
+extags: 2026-01|virtual-memory|caches

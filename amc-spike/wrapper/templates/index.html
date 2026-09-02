@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Projets AMC{% endblock %}
+{% block content %}
+<h1>Projets AMC (spike)</h1>
+
+<section>
+  <h2>Nouveau projet</h2>
+  <form method="post" action="/projects">
+    <label>Nom</label>
+    <input type="text" name="name" required>
+    <button type="submit">Créer</button>
+  </form>
+</section>
+
+<section>
+  <h2>Projets existants</h2>
+  {% if projects %}
+  <table>
+    <tr><th>Nom</th><th>Créé le</th><th></th></tr>
+    {% for p in projects %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.created_at }}</td>
+      <td><a href="/projects/{{ p.id }}">Ouvrir</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p>Aucun projet pour l'instant.</p>
+  {% endif %}
+</section>
+{% endblock %}

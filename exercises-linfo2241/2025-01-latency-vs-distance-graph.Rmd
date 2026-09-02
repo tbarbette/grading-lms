@@ -1,0 +1,35 @@
+Question
+========
+Draw a proper graph that approximates the latency of: a register, L1 and L2 cache, DRAM, an HDD, a transfer over WiFi, and the picture of (1) a cute cat that is very trendy on Instagram and (2) a picture of a random cat that nobody has seen yet, just published by someone in the USA.
+
+The X axis is the approximate distance from the CPU control unit to the item. The Y axis is free but should be chosen wisely.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.0}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,1,99,99)
+arrows(12,10,94,10,length=.1); arrows(12,10,12,92,length=.1)
+text(53,5,"Distance from the control unit",cex=.8); text(6,50,"Latency",srt=90,cex=.8)
+```
+
+Solution
+========
+The Y axis must be latency on a logarithmic scale, since the values span more than ten orders of magnitude, and the X axis, distance, is best logarithmic too. The points then line up on a rising curve.
+
+- Register: inside the core, under a nanometre scale distance, about 0.3 ns.
+- L1: a few mm, about 1 ns. L2: about a cm, about 4 ns.
+- DRAM: a few cm, about 80 ns.
+- HDD: tens of cm inside the case, about 10 ms, dominated by the seek and not by the distance.
+- WiFi: a few metres, about 1 to 10 ms.
+- The trendy cat: served by a CDN cache nearby, tens of km, about 10 to 30 ms.
+- The fresh cat from the USA: no CDN copy yet, so it must be fetched across the Atlantic, about 6000 km, about 100 to 150 ms.
+
+The point of the last two items is that they are at the same logical place but not at the same physical one: caching is what makes distance disappear, and a brand new object has not been cached anywhere yet.
+
+Meta-information
+================
+extype: string
+exsolution: log-log, register 0.3 ns to US cat about 120 ms
+exauthor: Tom Barbette
+expoints: 3
+exsection: Memory hierarchy
+extags: 2025-01|memory|dataviz

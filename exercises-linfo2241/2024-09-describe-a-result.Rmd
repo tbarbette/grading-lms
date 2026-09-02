@@ -1,0 +1,33 @@
+Question
+========
+What is a good way to describe an experiment result for a given metric?
+
+
+Answerlist
+----------
+* Standard deviation
+* Raw data points
+* Mean
+* A montecarlo markov chain
+
+Solution
+========
+A single number is never enough: a measurement must come with a central value and a measure of its dispersion.
+
+Answerlist
+----------
+* 1. The dispersion must always be reported, at least as a standard deviation.
+* 0. Useful as a complement, but not a description of the result by itself.
+* 1. The central value of the repetitions.
+* 0. This is a simulation technique, not a way to describe a result.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Methodology
+extags: 2024-09|methodology|dataviz

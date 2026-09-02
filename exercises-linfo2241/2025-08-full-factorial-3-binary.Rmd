@@ -1,0 +1,33 @@
+Question
+========
+If we test 3 binary factors using a full factorial design, how many combinations are required?
+
+
+Answerlist
+----------
+* 6
+* 8
+* 9
+* 3
+
+Solution
+========
+A full factorial design tests every combination of the levels: with 3 factors of 2 levels each, that is 2 x 2 x 2 = 8.
+
+Answerlist
+----------
+* 0. 6 is 3 times 2, but the combinations multiply, they do not add.
+* 1. 2 to the power 3 = 8 combinations.
+* 0. That would be 3 factors of 3 levels.
+* 0. That is the number of factors, not of combinations.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Methodology
+extags: 2025-08|methodology|converted-to-mcq

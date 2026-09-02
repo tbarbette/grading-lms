@@ -1,0 +1,29 @@
+Question
+========
+Draw a proper graph that approximates the latency of a web server about 100 km away from you, as a function of the number of concurrent requests.
+
+Think about what the latency of a web server is when you actually browse the web. The graph should follow all the standards seen about data visualization.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.0}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,1,99,99)
+arrows(12,10,94,10,length=.1); arrows(12,10,12,92,length=.1)
+text(53,5,"Concurrent requests",cex=.8); text(6,50,"Latency (ms)",srt=90,cex=.8)
+```
+
+Solution
+========
+The curve is flat then hockey sticks. At low concurrency the latency is dominated by the round trip: 100 km of fibre is about 1 ms of propagation there and back, and a real server answers in a few milliseconds, so the floor sits around 5 to 20 ms. That floor does not depend on the load.
+
+As concurrency grows the server approaches saturation, queueing appears and the latency climbs steeply, reaching hundreds of milliseconds and then growing without bound once the arrival rate exceeds the service rate.
+
+Expected of the graph: both axes labelled with units, a Y axis that starts at zero or is explicitly logarithmic, an X range covering enough concurrency to show the knee, and ideally the knee annotated. A flat line or a straight increasing line are both wrong.
+
+Meta-information
+================
+extype: string
+exsolution: flat floor around 10 ms, then sharp knee
+exauthor: Tom Barbette
+expoints: 3
+exsection: Metrics
+extags: 2024-09|metrics|dataviz

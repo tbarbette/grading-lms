@@ -1,0 +1,49 @@
+Question
+========
+Tick all the terms that define a good performance requirement.
+
+
+Answerlist
+----------
+* Super
+* Symmetrical
+* Measurable
+* Metric
+* Acceptable
+* Agnostic
+* Realizable
+* Rate
+* Thorough
+* Specific
+* Magic
+* Translatable
+
+Solution
+========
+A good performance requirement is SMART: Specific, Measurable, Acceptable, Realizable and Thorough.
+
+Answerlist
+----------
+* 0. Not part of the definition.
+* 0. Not part of the definition.
+* 1. M in SMART: the requirement must be quantifiable.
+* 0. A metric is what you measure, not a property of the requirement.
+* 1. A in SMART: the target must be acceptable to the stakeholders.
+* 0. Not part of the definition.
+* 1. R in SMART: the target must be achievable.
+* 0. Not part of the definition.
+* 1. T in SMART: the requirement must cover the relevant conditions.
+* 1. S in SMART: the requirement must be unambiguous.
+* 0. Not part of the definition.
+* 0. Not part of the definition.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 001010101100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Methodology
+extags: 2024-09|methodology

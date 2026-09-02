@@ -1,0 +1,33 @@
+Question
+========
+What is typical of a RISC CPU like ARM?
+
+
+Answerlist
+----------
+* Memory access must be done through load and stores
+* No support for virtual memory
+* 3-operand instruction
+* Simpler pipeline
+
+Solution
+========
+RISC keeps the instruction set small and regular: only load and store touch memory, instructions have a fixed and regular format with three operands, and the resulting pipeline is simpler to build.
+
+Answerlist
+----------
+* 1. This is the load-store architecture, the defining trait of RISC.
+* 0. ARM has a full MMU and supports virtual memory.
+* 1. RISC instructions typically name two sources and one destination.
+* 1. Regular, fixed-size instructions make the pipeline much simpler than for a CISC.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1011
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2025-01|cpu|isa

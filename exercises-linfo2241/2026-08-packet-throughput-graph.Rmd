@@ -1,0 +1,35 @@
+Question
+========
+A single CPU core processes packets from a 10 Gbps interface. Packets are 64 to 1500 bytes, separated by a preamble and a silence equivalent to 20 bytes in total. Each packet costs a roughly fixed amount of CPU work independent of its size, plus a small per-byte cost.
+
+(a) How many 64 byte packets can a 10 Gbps link send in one second?
+(b) Draw a graph of the throughput the core can sustain as a function of the packet size, from 64 to 1500 bytes, indicating the region where the CPU is the bottleneck and the region where the link is the bottleneck.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.0}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,1,99,99)
+arrows(12,10,94,10,length=.1); arrows(12,10,12,92,length=.1)
+text(53,5,"Packet size (bytes)",cex=.8); text(6,50,"Throughput (Gbps)",srt=90,cex=.8)
+```
+
+Solution
+========
+(a) A 64 byte packet occupies 64 + 20 = 84 bytes on the wire, that is 672 bits. 10^10 / 672 = about 14.88 million packets per second.
+
+(b) Throughput in Gbps against packet size. Two regimes:
+
+- Small packets: the core can only process a fixed number of packets per second, say a few million, well below the 14.88 million the link delivers. Throughput is that packet rate times the packet size, so it rises roughly linearly with the size. The CPU is the bottleneck.
+- Large packets: the packet rate needed drops until the core can keep up, and the throughput saturates at the 10 Gbps of the link. The curve flattens at 10 Gbps and stays there to 1500 bytes.
+
+The crossover, where the two regions meet, is the interesting point to annotate, typically a few hundred bytes for a single core. Mark the CPU-bound region on the left, the link-bound plateau on the right, and draw the 10 Gbps line as a horizontal asymptote.
+
+Expected of the graph: axes labelled with units, Y starting at zero and capped at 10 Gbps, X from 64 to 1500, and the two regions clearly annotated.
+
+Meta-information
+================
+extype: string
+exsolution: 14.88 Mpps, rising then flat at 10 Gbps
+exauthor: Tom Barbette
+expoints: 3
+exsection: Networking
+extags: 2026-08|networking|dataviz

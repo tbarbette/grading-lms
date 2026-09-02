@@ -34,44 +34,44 @@ Columns are the candidate solutions — the ones that handle open questions on p
 
 **Legend** — ✅ yes · 🟡 partial, see notes · ❌ no · ❔ not verified · — not applicable
 
-| Feature | Rex + nops | R/exams (lib) | AMC | Plom | ScanExam | Ans | Gradescope | Crowdmark | Ours |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **EXAM GENERATION** | | | | | | | | | |
-| Generates the exam at all | ✅ | ✅ | ✅ | 🟡 stamps | ❌ | ✅ | ❌ | 🟡 booklets | ✅ |
-| Web UI for authoring | ✅ | ❌ | 🟡 GUI | ❌ | — | ✅ | — | ❌ | ✅ |
-| Reusable question bank | 🟡 flat list | 🟡 files | 🟡 files | ❌ | — | ✅ | — | ❌ | ✅ |
-| Authoring format | Rmd / Rnw | Rmd / Rnw | LaTeX | your PDF | — | web editor | — | your PDF | YAML + LaTeX |
-| LaTeX / math typesetting | ✅ | ✅ | ✅ | ✅ yours | — | 🟡 | — | ✅ | ✅ |
-| N variants from one source (seeds) | ✅ | ✅ | ✅ | 🟡 versions | — | 🟡 | — | ❌ | ✅ |
-| Random draw from a larger pool | ✅ | ✅ | ✅ | ❌ | — | ❔ | — | ❌ | ✅ |
-| Shuffled answer order | ✅ | ✅ | ✅ | ❌ | — | ❔ | — | ❌ | ✅ |
-| Typed sub-questions | 🟡 3 types | 🟡 5 types | 🟡 | ❌ | — | ✅ | — | ❌ | ✅ |
-| Open questions printed on the paper | ✅ | ✅ | ✅ | ✅ | — | ✅ | — | ✅ | ✅ |
-| Max open questions per paper | **3** | **3** (nops) | ∞ | ∞ | — | ∞ | — | ∞ | ∞ |
-| Machine-locatable zone for open answers | 🟡 fixed sheet | 🟡 fixed sheet | ❌ | ✅ per page | — | ✅ | — | ✅ | ✅ |
-| Dedicated drawing / figure space | 🟡 | 🟡 | 🟡 | ✅ | — | ✅ | — | ✅ | ✅ |
-| Per-copy identifier printed on the page | ✅ | ✅ | ✅ | ✅ QR | — | ✅ | — | ✅ | ✅ |
-| Scriptable / CI-able generation | 🟡 | ✅ | ✅ | ✅ | — | ❌ | — | ❌ | ✅ |
-| **EXAM GRADING** | | | | | | | | | |
-| Batch scan import | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Automatic copy ↔ student matching | ✅ | ❌ | ✅ | ✅ QR | ❔ | ✅ | ✅ | ✅ | ✅ |
-| MCQ auto-grading (OMR) | ✅ | ❌ | ✅ | ❌ | ❔ | ✅ | ✅ | 🟡 | ✅ |
-| **Per-question crop from the scan** | ❌ | ❌ | 🟡 boxes only | ✅ | ❔ | ✅ | ✅ | ✅ | ✅ |
-| Grade-by-question across all copies | ❌ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Rubrics editable mid-grading | ❌ | ❌ | 🟡 scoring rules | ✅ deltas | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Rubric edits apply retroactively | ❌ | ❌ | ✅ re-run | ❔ | ❔ | ❔ | ✅ | ✅ | ✅ |
-| Multiple markers / teaching team | ❌ | ❌ | 🟡 | ✅ | ❔ | ✅ | ✅ | ✅ | 🟡 |
-| Anonymous marking | ❌ | ❌ | ❌ | ✅ by design | ❔ | ✅ | 🟡 | 🟡 | ✅ |
-| Grouping of identical/similar answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❔ | ✅ AI | ❔ | 🟡 |
-| LLM-assisted grading of open answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❔ | 🟡 closed | ❔ | ✅ |
-| Handwriting recognition | ❌ | ❌ | ❌ | ❌ | ❔ | ❔ | ✅ EN + math | ❔ | ✅ via LLM |
-| Annotated copies returned to students | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| CSV / grade export | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Item statistics / analysis | ✅ | ❌ | ✅ | 🟡 | ❌ | ✅ | ✅ | ✅ | 🟡 |
-| **PRACTICAL** | | | | | | | | | |
-| Self-hosted, data stays local | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
-| Licence / cost | GPL-3 | GPL | GPL | AGPL-3 | EPL-2.0 | paid SaaS | paid SaaS | paid SaaS | ours |
-| Can we change it | ✅ | ✅ | 🟡 C++/Perl | ✅ Python | ✅ Java | ❌ | ❌ | ❌ | ✅ |
+| Feature | Rex + nops | R/exams (lib) | AMC | Plom | ScanExam | Ans | Gradescope | Crowdmark |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **EXAM GENERATION** | | | | | | | | |
+| Generates the exam at all | ✅ | ✅ | ✅ | 🟡 stamps | ❌ | ✅ | ❌ | 🟡 booklets |
+| Web UI for authoring | ✅ | ❌ | 🟡 GUI | ❌ | — | ✅ | — | ❌ |
+| Reusable question bank | 🟡 flat list | 🟡 files | 🟡 files | ❌ | — | ✅ | — | ❌ |
+| Authoring format | Rmd / Rnw | Rmd / Rnw | LaTeX | your PDF | — | web editor | — | your PDF |
+| LaTeX / math typesetting | ✅ | ✅ | ✅ | ✅ yours | — | 🟡 | — | ✅ |
+| N variants from one source (seeds) | ✅ | ✅ | ✅ | 🟡 versions | — | 🟡 | — | ❌ |
+| Random draw from a larger pool | ✅ | ✅ | ✅ | ❌ | — | ❔ | — | ❌ |
+| Shuffled answer order | ✅ | ✅ | ✅ | ❌ | — | ❔ | — | ❌ |
+| Typed sub-questions | 🟡 3 types | 🟡 5 types | 🟡 | ❌ | — | ✅ | — | ❌ |
+| Open questions printed on the paper | ✅ | ✅ | ✅ | ✅ | — | ✅ | — | ✅ |
+| Max open questions per paper | **3** | **3** (nops) | ∞ | ∞ | — | ∞ | — | ∞ |
+| Machine-locatable zone for open answers | 🟡 fixed sheet | 🟡 fixed sheet | ❌ | ✅ per page | — | ✅ | — | ✅ |
+| Dedicated drawing / figure space | 🟡 | 🟡 | 🟡 | ✅ | — | ✅ | — | ✅ |
+| Per-copy identifier printed on the page | ✅ | ✅ | ✅ | ✅ QR | — | ✅ | — | ✅ |
+| Scriptable / CI-able generation | 🟡 | ✅ | ✅ | ✅ | — | ❌ | — | ❌ |
+| **EXAM GRADING** | | | | | | | | |
+| Batch scan import | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Automatic copy ↔ student matching | ✅ | ❌ | ✅ | ✅ QR | ❔ | ✅ | ✅ | ✅ |
+| MCQ auto-grading (OMR) | ✅ | ❌ | ✅ | ❌ | ❔ | ✅ | ✅ | 🟡 |
+| **Per-question crop from the scan** | ❌ | ❌ | 🟡 boxes only | ✅ | ❔ | ✅ | ✅ | ✅ |
+| Grade-by-question across all copies | ❌ | ❌ | 🟡 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Rubrics editable mid-grading | ❌ | ❌ | 🟡 scoring rules | ✅ deltas | ✅ | ✅ | ✅ | ✅ |
+| Rubric edits apply retroactively | ❌ | ❌ | ✅ re-run | ❔ | ❔ | ❔ | ✅ | ✅ |
+| Multiple markers / teaching team | ❌ | ❌ | 🟡 | ✅ | ❔ | ✅ | ✅ | ✅ |
+| Anonymous marking | ❌ | ❌ | ❌ | ✅ by design | ❔ | ✅ | 🟡 | 🟡 |
+| Grouping of identical/similar answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❔ | ✅ AI | ❔ |
+| LLM-assisted grading of open answers | ❌ | ❌ | ❌ | ❌ | ❌ | ❔ | 🟡 closed | ❔ |
+| Handwriting recognition | ❌ | ❌ | ❌ | ❌ | ❔ | ❔ | ✅ EN + math | ❔ |
+| Annotated copies returned to students | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| CSV / grade export | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Item statistics / analysis | ✅ | ❌ | ✅ | 🟡 | ❌ | ✅ | ✅ | ✅ |
+| **PRACTICAL** | | | | | | | | |
+| Self-hosted, data stays local | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Licence / cost | GPL-3 | GPL | GPL | AGPL-3 | EPL-2.0 | paid SaaS | paid SaaS | paid SaaS |
+| Can we change it | ✅ | ✅ | 🟡 C++/Perl | ✅ Python | ✅ Java | ❌ | ❌ | ❌ |
 
 The row that decides everything is **per-question crop from the scan**. Every open-question workflow — manual, rubric-based, or LLM — needs the system to hand you a rectangle of pixels that it knows belongs to student *s*, question *q*. Exactly one self-hostable tool has it today: **Plom**. That single cell is the difference between "extend an existing system" and "write the capture layer ourselves", and it is why Plom deserves an evaluation before any more code is written.
 

@@ -1,0 +1,29 @@
+Question
+========
+A team must choose between local servers and a cloud provider. The service must support 50 000 req/s. A local server handles 1000 req/s, costs 3000 kg CO2e to manufacture and draws 200 W. A cloud VM handles 500 req/s, is charged 1/10 of a server's manufacturing footprint, that is 300 kg CO2e, and draws 120 W. Electricity is 165 g CO2e/kWh, devices are replaced every 5 years, the horizon is 5 years of 365 days. Ignore scope 1.
+
+Compute the number of machines, the manufacturing emissions, the operational emissions, the totals, and say which is better.
+
+Solution
+========
+Five years is 43800 hours.
+
+Number of machines: local 50000/1000 = 50 servers; cloud 50000/500 = 100 VMs.
+
+Manufacturing: local 50 x 3000 = 150 000 kg; cloud 100 x 300 = 30 000 kg.
+
+Electricity: local 50 x 200 = 10 000 W, so 438 000 kWh, times 165 g = 72 270 kg.
+  Cloud 100 x 120 = 12 000 W, so 525 600 kWh, times 165 g = 86 724 kg.
+
+Totals: local 222 270 kg; cloud 116 724 kg.
+
+The cloud is about 1.9 times better. Note that the cloud actually consumes more electricity, because it needs twice as many, less capable instances; what makes it win is the amortisation of the manufacturing over many tenants. The result is entirely driven by the 1/10 attribution hypothesis, which is worth questioning.
+
+Meta-information
+================
+extype: string
+exsolution: local about 222 t, cloud about 117 t, cloud better
+exauthor: Tom Barbette
+expoints: 4
+exsection: Sustainability
+extags: 2025-08|sustainability|co2e

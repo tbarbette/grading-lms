@@ -1,0 +1,33 @@
+Question
+========
+What applies to Direct Memory Access (DMA)?
+
+
+Answerlist
+----------
+* The device reads and writes host memory without the CPU copying each byte
+* It always requires the CPU to poll the device until the transfer completes
+* It is the reason why an IOMMU is useful for isolation
+* It removes the need for any interrupt or completion notification
+
+Solution
+========
+DMA lets the device itself read and write host memory, which is what removes the per-byte copy from the CPU. Because the device then holds a real pointer into memory, an IOMMU is needed to restrict what it may touch.
+
+Answerlist
+----------
+* 1. This is the definition of Direct Memory Access.
+* 0. Completion is normally signalled by an interrupt; polling is one option among others.
+* 1. A device with direct access to memory must be confined, which is what the IOMMU does.
+* 0. The CPU still has to learn that the transfer is finished.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: I/O
+extags: 2026-08|io|dma

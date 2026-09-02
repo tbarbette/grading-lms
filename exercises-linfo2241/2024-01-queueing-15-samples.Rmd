@@ -1,0 +1,33 @@
+Question
+========
+Consider a server with one service station and infinite buffer capacity. It receives a request every 50 milliseconds on average according to a Poisson distribution. The observed service times in ms are:
+
+23, 21, 20, 21, 24, 22, 21, 24, 24, 20, 20, 22, 21, 23, 24
+
+(a) What is the expected response time of the system?
+(b) What is the expected queue length?
+
+Solution
+========
+Arrivals are Poisson, service times are measured and not exponential, so this is M/G/1.
+
+The 15 samples sum to 330, so E[S] = 22 ms. Their squares sum to 7294, so E[S2] = 486.3 ms2.
+
+lambda = 1/50 = 0.02 per ms, so rho = lambda x E[S] = 22/50 = 0.44.
+
+E[W] = lambda x E[S2] / (2 (1 - rho)) = (0.02 x 486.3) / (2 x 0.56) = 9.73 / 1.12 = 8.7 ms.
+
+(a) E[R] = E[W] + E[S] = 8.7 + 22 = 30.7 ms.
+
+(b) The queue length is the number waiting, so by Little's law applied to the queue, E[Nw] = lambda x E[W] = 0.02 x 8.7 = 0.17 job.
+
+Careful not to answer E[N], which also counts the job in service and would be 0.17 + 0.44 = 0.61.
+
+Meta-information
+================
+extype: string
+exsolution: E[R] about 30.7 ms, E[Nw] about 0.17 job
+exauthor: Tom Barbette
+expoints: 4
+exsection: Queueing theory
+extags: 2024-01|queueing

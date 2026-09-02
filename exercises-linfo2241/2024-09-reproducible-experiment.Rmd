@@ -1,0 +1,33 @@
+Question
+========
+What applies to a reproducible experiment?
+
+
+Answerlist
+----------
+* Same team
+* Same testbed
+* Exact same results
+* Same software
+
+Solution
+========
+Reproducibility means that somebody else, who was not part of the original team, can obtain a consistent result using the same experimental setup and the same software. It does not mean bit-identical numbers.
+
+Answerlist
+----------
+* 0. Repeating with the same team is repeatability, not reproducibility.
+* 1. The same experimental setup must be available to whoever repeats the experiment.
+* 0. Measurements vary; consistent results within the reported variability are enough.
+* 1. The exact software and its version must be pinned, otherwise the experiment cannot be reproduced.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0101
+exauthor: Tom Barbette
+expoints: 1
+exsection: Methodology
+extags: 2024-09|methodology

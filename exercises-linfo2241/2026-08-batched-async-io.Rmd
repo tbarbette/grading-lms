@@ -1,0 +1,33 @@
+Question
+========
+Why is a batched, asynchronous I/O interface, sending a vector of read addresses such as io_uring, faster than a loop of blocking read() calls?
+
+
+Answerlist
+----------
+* It amortizes the cost of the user/kernel transition over many operations
+* It makes the storage device itself faster
+* It lets the application keep the CPU busy while operations are in flight
+* It removes the need for the kernel to do any work at all
+
+Solution
+========
+One system call carries N operations instead of one, so the fixed cost of crossing the user and kernel boundary is paid once for the whole batch. And because the calls do not block, the application keeps computing while the operations are in flight.
+
+Answerlist
+----------
+* 1. The fixed cost of the boundary crossing is divided by the size of the batch.
+* 0. The device is unchanged; only the way it is driven changes.
+* 1. Nothing blocks, so computation and I/O overlap.
+* 0. The kernel still performs every one of the operations.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: I/O
+extags: 2026-08|io|io_uring

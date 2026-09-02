@@ -1,0 +1,35 @@
+Question
+========
+Computer networks exchange data in packets, sent one after the other, separated by a preamble and a period of silence on the wire equivalent to 20 bytes in total.
+
+How many 64 byte packets can a 10 Gbps link send in one second?
+
+
+Answerlist
+----------
+* about 14.88 million
+* about 19.53 million
+* about 1.25 million
+* about 10 million
+
+Solution
+========
+Each packet occupies 64 + 20 = 84 bytes on the wire, that is 672 bits. 10 000 000 000 / 672 gives about 14.88 million packets per second.
+
+Answerlist
+----------
+* 1. 10e9 divided by (64 + 20) x 8 = 10e9 / 672 = 14 880 952 packets per second.
+* 0. This forgets the 20 bytes of inter-packet overhead.
+* 0. This divides by 8000 instead of by 672.
+* 0. The rate is in bits per second, not in packets per second.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Networking
+extags: 2026-08|networking|converted-to-mcq

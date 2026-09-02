@@ -1,0 +1,39 @@
+Question
+========
+What is the length of the tag, in bits, with 32-bit addresses, cachelines of 128 bytes, in a 4-way set associative cache with 16 rows?
+
+
+Answerlist
+----------
+* 12
+* 17
+* 18
+* 20
+* 21
+* 22
+* 29
+
+Solution
+========
+The offset covers the cacheline: log2(128) = 7 bits. The row index covers the rows: log2(16) = 4 bits. The associativity does not consume address bits. Tag = 32 - 7 - 4 = 21 bits.
+
+Answerlist
+----------
+* 0. This would correspond to many more rows than the 16 given.
+* 0. This forgets bits: check offset = 7 and index = 4.
+* 0. This forgets bits: check offset = 7 and index = 4.
+* 0. Off by one: log2(16) = 4, not 5.
+* 1. 32 - log2(128) - log2(16) = 32 - 7 - 4 = 21 bits.
+* 0. Off by one: log2(128) = 7, not 6.
+* 0. This only removes the row index and forgets the offset.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0000100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-01|caches

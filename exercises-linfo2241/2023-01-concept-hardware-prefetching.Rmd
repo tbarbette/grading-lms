@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**Hardware Prefetching**
+
+Solution
+========
+Logic in the CPU that detects a regular access pattern, sequential or with a constant stride, and fetches the next cachelines before they are requested, so that the memory latency is hidden.
+
+Meta-information
+================
+extype: string
+exsolution: Hardware Prefetching
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

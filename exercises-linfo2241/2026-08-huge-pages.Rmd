@@ -1,0 +1,33 @@
+Question
+========
+Why do modern systems use huge pages (e.g. 2 MB instead of 4 KB)?
+
+
+Answerlist
+----------
+* It reduces the number of TLB entries needed to cover the same amount of memory
+* It reduces the amount of internal fragmentation
+* It reduces the depth of the page table walk
+* It makes DRAM access itself faster
+
+Solution
+========
+One huge page replaces 512 normal pages: a single TLB entry now covers 2 MB instead of 4 KB, and one level of the page table walk disappears. The cost is that a partially used huge page wastes much more memory.
+
+Answerlist
+----------
+* 1. One entry covers 2 MB instead of 4 KB, so the TLB reach grows by a factor of 512.
+* 0. The opposite: a barely used 2 MB page wastes far more than a 4 KB one.
+* 1. The last level of the table is not needed any more.
+* 0. The DRAM timings are unchanged; only the translation is cheaper.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Virtual memory
+extags: 2026-08|virtual-memory

@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.name }}{% endblock %}
+{% block content %}
+<h1>{{ meta.name }}</h1>
+
+<section>
+  <h2>1. Source LaTeX (macros AMC natives)</h2>
+  <form method="post" action="/projects/{{ pid }}/source">
+    <label>source.tex</label>
+    <textarea name="source_text" rows="16">{{ source_text }}</textarea>
+    <button type="submit">Enregistrer</button>
+  </form>
+</section>
+
+<section>
+  <h2>1bis. Personnalisation &mdash; variables/seed (Jinja2)</h2>
+  <p>Colle un template <code>question.tex.jinja</code> + une liste de variables
+     (une par ligne, <code>nom = expression</code>, supporte <code>randint(a,b)</code>
+     et l'arithmétique de base), un seed, et "Générer" écrit le résultat dans
+     <code>source.tex</code> ci-dessus.</p>
+  <form method="post" action="/projects/{{ pid }}/render-variables">
+    <label>Template (.tex.jinja)</label>
+    <textarea name="template_text" rows="10" placeholder="Combien font {{ '{{ a }}' }} + {{ '{{ b }}' }} ?"></textarea>
+    <label>Variables</label>
+    <textarea name="variables_text" rows="4" placeholder="a = randint(2,9)&#10;b = randint(2,9)&#10;sum = a + b"></textarea>
+    <label>Seed</label>
+    <input type="number" name="seed" value="{{ meta.get('n_copies', 1) }}">
+    <button type="submit">Générer source.tex</button>
+  </form>
+</section>
+
+<section>
+  <h2>2. Génération du sujet (AMC prepare)</h2>
+  <form method="post" action="/projects/{{ pid }}/prepare">
+    <label>Nombre de copies</label>
+    <input type="number" name="n_copies" value="3" min="1">
+    <button type="submit">Prepare</button>
+  </form>
+  {% if logs.prepare %}<pre>{{ logs.prepare }}</pre>{% endif %}
+  <p>
+    {% if files_present.sujet %}<a class="button" href="/projects/{{ pid }}/download/sujet">Télécharger sujet.pdf</a>{% endif %}
+    {% if files_present.corrige %}| <a class="button" href="/projects/{{ pid }}/download/corrige">corrige.pdf</a>{% endif %}
+    {% if files_present.catalog %}| <a class="button" href="/projects/{{ pid }}/download/catalog">catalog.pdf</a>{% endif %}
+  </p>
+</section>
+
+<section>
+  <h2>3. Liste des étudiants (CSV, colonnes: id,name)</h2>
+  <form method="post" action="/projects/{{ pid }}/students" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required>
+    <button type="submit">Uploader</button>
+  </form>
+  <p>{{ "Uploadé." if students_uploaded else "Pas encore uploadé." }}</p>
+</section>
+
+<section>
+  <h2>4. Scans des copies remplies</h2>
+  <form method="post" action="/projects/{{ pid }}/scans" enctype="multipart/form-data">
+    <input type="file" name="files" accept="image/*,.pdf" multiple required>
+    <button type="submit">Uploader</button>
+  </form>
+  <p>Fichiers présents : {{ scans | join(", ") if scans else "aucun" }}</p>
+</section>
+
+<section>
+  <h2>5. Pipeline de correction AMC</h2>
+  <form method="post" action="/projects/{{ pid }}/analyse" style="display:inline">
+    <button type="submit">Analyse (OMR)</button>
+  </form>
+  <form method="post" action="/projects/{{ pid }}/associate" style="display:inline">
+    <button type="submit">Associate</button>
+  </form>
+  <form method="post" action="/projects/{{ pid }}/note" style="display:inline">
+    <button type="submit">Note</button>
+  </form>
+  <form method="post" action="/projects/{{ pid }}/export" style="display:inline">
+    <button type="submit">Export CSV</button>
+  </form>
+  <form method="post" action="/projects/{{ pid }}/annotate" style="display:inline">
+    <button type="submit">Annotate</button>
+  </form>
+  {% if files_present.results %}<p><a href="/projects/{{ pid }}/download/results">Télécharger results.csv</a></p>{% endif %}
+  {% for action in ["analyse", "associate", "note", "export", "annotate"] %}
+    {% if logs[action] %}<h3>{{ action }}</h3><pre>{{ logs[action] }}</pre>{% endif %}
+  {% endfor %}
+</section>
+
+<section>
+  <h2>6. Correction assistée par LLM (zones capturées automatiquement par AMC)</h2>
+  <p><a href="/projects/{{ pid }}/grading">Ouvrir la page de correction &rarr;</a>
+     &mdash; les images y sont extraites directement de <code>capture.sqlite</code>
+     (déjà recadrées/alignées par AMC), aucun upload manuel.</p>
+
+  <p><em>Repli manuel</em> : les questions <code>questionouverte</code> ne sont
+     pas suivies géométriquement par AMC (pas de zone, donc pas de crop auto).
+     Pour celles-ci uniquement, on peut uploader une image déjà recadrée à la main :</p>
+  <form method="post" action="/projects/{{ pid }}/llm-transcribe" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*" required>
+    <button type="submit">Transcrire (image uploadée)</button>
+  </form>
+  {% if llm_error %}<p class="err">Erreur LLM : {{ llm_error }}</p>{% endif %}
+  {% if llm_result is defined and llm_result %}<pre>{{ llm_result }}</pre>{% endif %}
+</section>
+
+<section>
+  <h2>7. Personnalisation &mdash; rubrique à la volée (façon Gradescope)</h2>
+  <form method="post" action="/projects/{{ pid }}/rubric/items">
+    <label>Question (id)</label>
+    <input type="text" name="question" required>
+    <label>Libellé</label>
+    <input type="text" name="label" required>
+    <label>Points (+/-)</label>
+    <input type="number" step="0.25" name="delta" required>
+    <button type="submit">Ajouter un item de rubrique</button>
+  </form>
+
+  <h3>Items existants</h3>
+  {% for q, items in rubric['items'].items() %}
+    <p><strong>{{ q }}</strong></p>
+    <ul>
+    {% for it in items %}
+      <li>[{{ it.id }}] {{ it.label }} ({{ it.delta }})</li>
+    {% endfor %}
+    </ul>
+  {% endfor %}
+
+  <h3>Appliquer un item à une copie</h3>
+  <form method="post" action="/projects/{{ pid }}/rubric/apply">
+    <label>Étudiant (id)</label>
+    <input type="text" name="student" required>
+    <label>Question (id)</label>
+    <input type="text" name="question" required>
+    <label>Item id</label>
+    <input type="number" name="item_id" required>
+    <button type="submit">Appliquer</button>
+  </form>
+</section>
+{% endblock %}

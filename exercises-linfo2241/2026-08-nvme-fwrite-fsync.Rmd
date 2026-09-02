@@ -1,0 +1,34 @@
+Question
+========
+A process writes a buffer to a file on an NVMe SSD by calling fwrite() and then fsync(). An NVMe device works like a network device: instead of sending a packet over a wire it writes bytes at a given offset using the same mechanisms. Hint: fwrite has a similar relation to the write system call as malloc has to brk.
+
+Draw the schematic of everything that happens, from the calls in the process until the data is durably stored and the process is woken up. Show where the data is buffered or copied, and how the device signals completion. Name the two sides of the dashed line.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,36,99,99); text(14,96,"Computer - Software",cex=.8)
+segments(1,66,99,66,lty=2,lwd=2)
+rect(1,1,99,33);  text(14,30,"Computer - Hardware",cex=.8)
+```
+
+Solution
+========
+The two sides are user space and kernel space.
+
+1. fwrite is a libc function, not a system call. Like malloc over brk, it manages a user space buffer inside the FILE structure and only calls write when that buffer fills or is flushed. So the first copy is from the user buffer into the stdio buffer, still entirely in user space.
+2. When it flushes, write() traps into the kernel: first boundary crossing. The data is copied a second time, into the page cache, and the pages are marked dirty. write returns immediately, and at this point nothing is on the device.
+3. fsync() traps again and forces the writeback. The filesystem turns the file offsets into logical blocks, the block layer builds and queues the requests.
+4. The NVMe driver writes a submission queue entry into a queue in host memory and rings a doorbell register, exactly like posting a descriptor to a NIC. The device DMAs the data out of the page cache itself.
+5. The device writes the medium, and to be truly durable the data must leave the device write cache, which is what the flush command that fsync triggers is for.
+6. The device posts a completion queue entry and raises an interrupt, typically MSI-X. The driver handles it, the block layer marks the request done, fsync returns and the process is woken: second boundary crossing back to user space.
+
+Worth marking on the drawing: the three places the data sits, stdio buffer, page cache and device cache, the two copies, the DMA arrow from the device into memory, and the doorbell plus interrupt pair, which is the same submission and completion pattern as a NIC.
+
+Meta-information
+================
+extype: string
+exsolution: stdio buffer, page cache, doorbell, DMA, completion IRQ
+exauthor: Tom Barbette
+expoints: 4
+exsection: I/O
+extags: 2026-08|io|storage

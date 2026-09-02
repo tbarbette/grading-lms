@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}AMC spike{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1, h2 { border-bottom: 1px solid #ddd; padding-bottom: .3rem; }
+    section { margin-bottom: 2rem; padding: 1rem; border: 1px solid #e0e0e0; border-radius: 6px; }
+    textarea { width: 100%; font-family: monospace; font-size: .85rem; }
+    label { display: block; margin-top: .5rem; font-weight: 600; }
+    input[type=text], input[type=number] { width: 100%; padding: .3rem; }
+    button { margin-top: .6rem; padding: .4rem .9rem; cursor: pointer; }
+    pre { background: #f5f5f5; padding: .6rem; overflow-x: auto; white-space: pre-wrap; }
+    .ok { color: #0a7d2c; }
+    .err { color: #b00020; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border: 1px solid #ddd; padding: .3rem .5rem; text-align: left; }
+    a.button { display: inline-block; }
+  </style>
+</head>
+<body>
+  <p><a href="/">&larr; Projets</a></p>
+  {% block content %}{% endblock %}
+</body>
+</html>

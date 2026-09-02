@@ -1,0 +1,33 @@
+Question
+========
+Double buffering is used to do what?
+
+
+Answerlist
+----------
+* Reduce cache misses
+* Proceed while I/O is happening
+* Increase the size of virtual memory
+* Ensure the user cannot overwrite the data before it is sent
+
+Solution
+========
+While one buffer is being transferred to the device, the application fills the other one, so computation and I/O overlap. It also guarantees that the buffer handed to the device is not modified under its feet while the transfer is in flight.
+
+Answerlist
+----------
+* 0. Using two buffers rather increases the memory footprint.
+* 1. One buffer is in flight while the other is being filled, so the two overlap.
+* 0. Unrelated to the size of the address space.
+* 1. The buffer being transferred is left untouched until the device is done with it.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0101
+exauthor: Tom Barbette
+expoints: 1
+exsection: I/O
+extags: 2025-08|io

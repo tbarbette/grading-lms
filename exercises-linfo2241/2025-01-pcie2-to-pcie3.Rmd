@@ -1,0 +1,33 @@
+Question
+========
+How did the useable speed increase from PCI Express 2 to PCI Express 3?
+
+
+Answerlist
+----------
+* Number of lanes
+* Bus speed (GT/s)
+* Encoding
+* Quantum bits
+
+Solution
+========
+PCIe 3 raised the signalling rate from 5 to 8 GT/s and, at the same time, replaced the 8b/10b line code, which wasted 20 percent of the raw rate, by 128b/130b, which wastes about 1.5 percent. The two combined roughly double the useable bandwidth per lane.
+
+Answerlist
+----------
+* 0. The number of lanes is a property of the slot, it did not change with the generation.
+* 1. The signalling rate went from 5 GT/s to 8 GT/s.
+* 1. 8b/10b was replaced by 128b/130b, which removes most of the encoding overhead.
+* 0. Unrelated to PCI Express.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0110
+exauthor: Tom Barbette
+expoints: 1
+exsection: I/O
+extags: 2025-01|io|pcie

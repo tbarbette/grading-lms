@@ -1,0 +1,50 @@
+Question
+========
+Imagine the big steps of an algorithm to defragment the memory of a process currently using many virtually contiguous 4 KB pages scattered across physical memory, combining the frames into a single 2 MB huge page.
+
+The data structures are: `struct entry { bit valid; void* frame_ptr; }` pointing to a 4096 byte region; `struct pte { bit is_huge; union { struct entry* entries; void* huge_frame_ptr; } }` where `entries` points to a table of 512 entries; and `struct pte name_of_a[1024]` defined per process.
+
+(a) What data structure does the algorithm modify to make the change visible to the MMU?
+(b) Why run such an algorithm, what are the gains, and which hardware component benefits?
+(c) What is the size of the virtual memory space?
+(d) Give pseudo code for `defragment_name_of_a(struct pte* name_of_a)`, given `alloc_huge_frame()`, `free_frame()` and `physical_memcpy()`.
+
+Solution
+========
+(a) The page table itself, here `name_of_a`, which is the two-level structure the MMU walks. Changing it is what makes the new mapping visible, and it must be followed by a TLB invalidation.
+
+(b) Because 512 scattered 4 KB pages need 512 TLB entries whereas one 2 MB huge page needs one. The gain is TLB reach and therefore far fewer TLB misses, plus one less level of page table walk on each miss. The component that benefits is the TLB, and behind it the MMU doing the walk.
+
+(c) Each `pte` covers either one 2 MB huge frame or 512 entries of 4096 bytes, which is also 2 MB. With 1024 ptes the virtual space is 1024 x 2 MB = 2 GB.
+
+(d) For each pte, if it is not already huge, check that all 512 entries are valid; if so allocate a huge frame, copy each 4 KB frame into it at the right offset, free the old frames, then flip the pte:
+
+    for (i = 0; i < 1024; i++) {
+        pte = name_of_a[i];
+        if (pte.is_huge) continue;
+        all_valid = true;
+        for (j = 0; j < 512; j++)
+            if (!pte.entries[j].valid) { all_valid = false; break; }
+        if (!all_valid) continue;
+        huge = alloc_huge_frame();
+        if (huge == NULL) continue;
+        for (j = 0; j < 512; j++)
+            physical_memcpy(pte.entries[j].frame_ptr, huge + j * 4096, 4096);
+        for (j = 0; j < 512; j++)
+            free_frame(pte.entries[j].frame_ptr);
+        free_frame(pte.entries);
+        pte.huge_frame_ptr = huge;
+        pte.is_huge = true;
+    }
+    flush_tlb();
+
+Two points are worth marks: the copy must happen before the pte is flipped, and the TLB must be invalidated afterwards, otherwise the MMU keeps translating with the stale entries. Ideally the process is also prevented from writing during the copy.
+
+Meta-information
+================
+extype: string
+exsolution: page table, TLB reach, 2 GB, copy then flip then flush
+exauthor: Tom Barbette
+expoints: 3
+exsection: Virtual memory
+extags: 2026-01|virtual-memory

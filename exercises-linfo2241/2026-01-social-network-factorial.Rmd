@@ -1,0 +1,30 @@
+Question
+========
+A web server serving a social network has: `PAGE` in welcome, login, feed, media; `ENCRYPTION` enabled or disabled; `PROTOCOL` tcp or quic; `USER_ID` a number between 1 and 1 000 000. WRK with a lua script builds the URL and measures throughput and latency.
+
+(a) How many combinations would a full factorial design require?
+(b) Each test runs 30 seconds with 3 repetitions: total execution time?
+(c) Name an experimental design approach that avoids the full factorial while still drawing the important observations effectively.
+(d) Given importances `PAGE` 0.58, `ENCRYPTION` 0.02, `PROTOCOL` 0.03, what is `USER_ID`?
+(e) What factors and levels should be kept in the final set, in alphabetical order?
+
+Solution
+========
+(a) 4 x 2 x 2 x 1 000 000 = 16 000 000 combinations.
+
+(b) 16 000 000 x 3 x 30 s = 1 440 000 000 s, that is about 16 667 days or roughly 45 years. The point of the question is that a parameter with a million levels makes the full factorial absurd.
+
+(c) A one factor at a time sweep, or a fractional factorial design.
+
+(d) The importances must sum to 1, so `USER_ID` is 1 - 0.58 - 0.02 - 0.03 = 0.37.
+
+(e) Keep `PAGE` and `USER_ID`, which alphabetically gives `PAGE` then `USER_ID`. `PAGE` keeps its four levels. `USER_ID` matters not as a million individual values but through what it selects, the size of the feed and how much of it is cached, so it must be reduced to a handful of representative classes, for instance a user with a small feed, a median one and a very large one. `ENCRYPTION` and `PROTOCOL` are fixed and reported.
+
+Meta-information
+================
+extype: string
+exsolution: 16 million, about 45 years, OAT, 0.37, PAGE and USER_ID
+exauthor: Tom Barbette
+expoints: 3
+exsection: Methodology
+extags: 2026-01|methodology

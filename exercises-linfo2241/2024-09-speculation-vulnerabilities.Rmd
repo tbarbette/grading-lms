@@ -1,0 +1,33 @@
+Question
+========
+What mechanism that improves the performance of a CPU pipeline has led to many vulnerabilities being discovered recently?
+
+
+Answerlist
+----------
+* Page table
+* Virtual Memory
+* Expansion slot
+* Speculation
+
+Solution
+========
+Speculative execution runs instructions before it is known whether they should have run. The results are rolled back, but the traces left in the microarchitectural state, in particular in the caches, can be read back by an attacker.
+
+Answerlist
+----------
+* 0. The page table is a memory translation structure, not a pipeline optimisation.
+* 0. Virtual memory is an isolation mechanism, not a pipeline optimisation.
+* 0. This is unrelated to the CPU pipeline.
+* 1. Speculative execution is at the root of the Spectre and Meltdown family.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0001
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2024-09|cpu|security

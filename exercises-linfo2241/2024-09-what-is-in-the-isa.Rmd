@@ -1,0 +1,33 @@
+Question
+========
+What is part of the ISA (Instruction Set Architecture)?
+
+
+Answerlist
+----------
+* Instructions of the CPU
+* Pipeline stages
+* Number of caches
+* Number of registers
+
+Solution
+========
+The ISA is the contract between the hardware and the software: what the programmer can name and use. Everything that is only an implementation choice of a given chip is microarchitecture, not ISA.
+
+Answerlist
+----------
+* 1. The instructions and their encoding are the core of the ISA.
+* 0. The pipeline depth is a microarchitectural choice, invisible in the ISA.
+* 0. The cache hierarchy is a microarchitectural choice.
+* 1. The architectural registers are named by the instructions, so they belong to the ISA.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1001
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2024-09|cpu|isa

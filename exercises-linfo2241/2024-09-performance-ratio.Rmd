@@ -1,0 +1,33 @@
+Question
+========
+A system A takes 10 seconds to execute, while B takes 15 seconds. How much faster is A than B (performance ratio)?
+
+
+Answerlist
+----------
+* 1,15
+* 1,5
+* 15
+* 10
+
+Solution
+========
+The performance ratio is the ratio of the execution times: 15 / 10 = 1.5.
+
+Answerlist
+----------
+* 0. This is not the ratio of the two execution times.
+* 1. 15 / 10 = 1.5, so A is 1.5 times faster than B.
+* 0. This is B's execution time, not a ratio.
+* 0. This is A's execution time, not a ratio.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Metrics
+extags: 2024-09|metrics

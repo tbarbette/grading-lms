@@ -1,0 +1,33 @@
+Question
+========
+You got an 'illegal instruction' error. How do you debug it?
+
+
+Answerlist
+----------
+* Perf
+* Valgrind
+* GDB
+* Intel V-tune
+
+Solution
+========
+You need to see which instruction the CPU refused to execute and where it came from, which is what a debugger gives you. A frequent cause is a binary built for a newer instruction set extension than the one the machine supports.
+
+Answerlist
+----------
+* 0. Perf profiles a program that runs; it does not tell you which instruction is illegal.
+* 0. Valgrind targets memory errors and leaks.
+* 1. The debugger stops on the faulting instruction and disassembles it.
+* 0. V-tune is a profiler, not a debugger.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Tooling
+extags: 2025-01|tooling

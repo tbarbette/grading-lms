@@ -1,0 +1,22 @@
+Question
+========
+Do you think the new QUIC protocol, meant to replace TCP, will be implemented in hardware, offloaded to the network card? Elaborate on what will be lost and what will be gained.
+
+Solution
+========
+Partially, and that is the interesting answer. The pieces that are stable and expensive per byte will be offloaded, in particular the crypto and the segmentation, and that is already happening. The full state machine is much less likely to move into silicon.
+
+What would be gained: the per packet cost drops, encryption and checksums run at line rate, and the CPU stops being the bottleneck at high speed. This is exactly what TCP offload did with TSO and checksum offload.
+
+What would be lost: QUIC lives in user space precisely so that it can evolve. Its congestion control and its loss recovery are changed on a deployment cycle of weeks, whereas a NIC ASIC is fixed for years and cannot be patched. Freezing QUIC in hardware would kill the property that made it succeed, and it would also re-create the ossification that QUIC was designed to escape. Add that QUIC encrypts almost the entire header, so a NIC cannot inspect what it is not given the key for.
+
+The reasonable outcome is a split: offload the datapath primitives, keep the protocol logic in software.
+
+Meta-information
+================
+extype: string
+exsolution: partial offload: crypto and segmentation yes, state machine no
+exauthor: Tom Barbette
+expoints: 2
+exsection: Networking
+extags: 2025-01|networking

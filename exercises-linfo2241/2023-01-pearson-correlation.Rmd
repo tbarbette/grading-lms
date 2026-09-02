@@ -1,0 +1,35 @@
+Question
+========
+The CPU time and disk I/Os of 5 programs are given below.
+
+| Program | CPU time (s) | Number of I/O requests |
+|---|---|---|
+| A | 10 | 27 |
+| B | 8 | 17 |
+| C | 4 | 11 |
+| D | 4 | 3 |
+| E | 4 | 2 |
+
+Determine the Pearson correlation between the number of I/O requests and the CPU time, then comment on the meaning of this value.
+
+Solution
+========
+Means: CPU time 30/5 = 6 s, I/O 60/5 = 12.
+
+Deviations for CPU time: 4, 2, -2, -2, -2. For I/O: 15, 5, -1, -9, -10.
+
+Sum of products = 60 + 10 + 2 + 18 + 20 = 110.
+Sum of squared CPU deviations = 32. Sum of squared I/O deviations = 432.
+
+r = 110 / sqrt(32 x 432) = 110 / 117.6 = 0.94.
+
+Comment: a correlation of 0.94 is a strong positive linear relationship, so programs doing more I/O also tend to use more CPU. It says nothing about causality, and with only 5 points it is a fragile estimate.
+
+Meta-information
+================
+extype: string
+exsolution: about 0.94, strong positive
+exauthor: Tom Barbette
+expoints: 3
+exsection: Methodology
+extags: 2023-01|methodology|statistics

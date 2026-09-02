@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**Factor**
+
+Solution
+========
+A parameter that we deliberately vary in an experiment. Parameters that are not factors are kept fixed. Choosing few, meaningful factors is what keeps the experimental design tractable.
+
+Meta-information
+================
+extype: string
+exsolution: Factor
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

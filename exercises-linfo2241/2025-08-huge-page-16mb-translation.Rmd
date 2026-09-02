@@ -1,0 +1,28 @@
+Question
+========
+A system has a 32-bit physical address space and 16 MByte huge pages. The page table holds: entry 0 frame 0x1C (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 0x21 (P=1, R/W=0, U=0), entry 3 frame 0x64 (P=1, R/W=0, U=1), entry 4 (P=0), entry 5 frame 0xFA7 (P=1, R/W=0, U=1), entry 6 frame 0x2C8 (P=1, R/W=0, U=1).
+
+Give the physical address in hexadecimal, or the reason for the error, for (a) a read at 0x03C1EB2E, (b) a write at 0x04B3D1D4, (c) a write at 0x05F4F6FA. Then: how many entries would the table need with 4 KB pages, and what is the impact on the TLB?
+
+Solution
+========
+16 MB pages means the offset is log2(16 x 1024 x 1024) = 24 bits, so the page number is the top 8 bits and the offset the low 24 bits.
+
+(a) 0x03C1EB2E: page 0x03, offset 0xC1EB2E. Entry 3 is present, readable, user accessible, frame 0x64. Physical address = 0x64 shifted by 24 bits, plus the offset, that is 0x64C1EB2E.
+
+(b) 0x04B3D1D4: page 0x04, which has P=0. Page fault, the page is not present.
+
+(c) 0x05F4F6FA: page 0x05, but entry 5 has R/W=0 and this is a write. Protection fault, the page is read only.
+
+With 4 KB pages the offset would be 12 bits, so the page number would be 20 bits and a single level table would need 2^20 = 1 048 576 entries, instead of 2^8 = 256.
+
+Impact on the TLB: each entry would then cover only 4 KB instead of 16 MB, so the TLB reach collapses by a factor of 4096. A working set that fitted in a handful of huge page entries now thrashes the TLB, and every miss costs a page table walk. This is precisely the reason huge pages exist.
+
+Meta-information
+================
+extype: string
+exsolution: 0x64C1EB2E, page fault, protection fault, 2^20 entries, TLB reach
+exauthor: Tom Barbette
+expoints: 4
+exsection: Virtual memory
+extags: 2025-08|virtual-memory

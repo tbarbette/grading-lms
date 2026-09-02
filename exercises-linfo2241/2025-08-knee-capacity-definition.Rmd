@@ -1,0 +1,33 @@
+Question
+========
+In performance evaluation, the knee capacity refers to what?
+
+
+Answerlist
+----------
+* Maximum theoretical throughput
+* The power efficiency point
+* The highest number of cores usable before bottleneck
+* The point where latency starts increasing sharply
+
+Solution
+========
+At the knee, the queues start to build up: throughput almost stops improving while the response time starts to climb steeply.
+
+Answerlist
+----------
+* 0. That is the nominal capacity, in ideal conditions.
+* 0. The knee is defined on the performance curve, not on power.
+* 0. The knee is a load threshold, not a core count.
+* 1. Past the knee the response time grows steeply for very little extra throughput.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0001
+exauthor: Tom Barbette
+expoints: 1
+exsection: Capacity
+extags: 2025-08|capacity

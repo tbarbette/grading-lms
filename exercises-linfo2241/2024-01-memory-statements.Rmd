@@ -1,0 +1,35 @@
+Question
+========
+Tick the correct statements about memory.
+
+
+Answerlist
+----------
+* Less registers mean smaller binary machine code
+* Registers are not actually faster than DRAM but are easier to manage than DRAM
+* DRAM has a voltage that is too high to be directly plugged into the CPU
+* Registers are more expensive than RAM
+* Faster memory is useless, it is not a bottleneck
+
+Solution
+========
+Registers are the fastest and, per bit, by far the most expensive storage in the machine. The number of architectural registers directly affects how many bits each instruction needs to name its operands.
+
+Answerlist
+----------
+* 1. Fewer registers need fewer bits to be addressed in the instruction encoding, so each instruction is smaller.
+* 0. Registers are faster than DRAM by several orders of magnitude.
+* 0. This is not the reason for the memory hierarchy; latency, bandwidth and cost are.
+* 1. Per bit stored, registers are the most expensive memory in the hierarchy.
+* 0. Memory is very often the bottleneck; this is the whole point of the cache hierarchy.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 10010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Memory hierarchy
+extags: 2024-01|memory

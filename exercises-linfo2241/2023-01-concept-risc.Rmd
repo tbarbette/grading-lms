@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**RISC**
+
+Solution
+========
+Reduced Instruction Set Computer. A small, regular, fixed size instruction set where only load and store access memory. Its most important consequence is a much simpler and more easily pipelined implementation.
+
+Meta-information
+================
+extype: string
+exsolution: RISC
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

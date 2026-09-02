@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**Ring -1**
+
+Solution
+========
+The privilege level below the kernel, introduced for hardware virtualisation, where the hypervisor runs. It lets a guest kernel keep believing it runs in ring 0 while the hypervisor keeps control.
+
+Meta-information
+================
+extype: string
+exsolution: Ring -1
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

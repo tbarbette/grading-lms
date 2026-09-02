@@ -1,0 +1,33 @@
+Question
+========
+What can cause a stall in a pipeline?
+
+
+Answerlist
+----------
+* Read After Write
+* Long fetch from the cache
+* Long fetch from the memory
+* Loop unrolling
+
+Solution
+========
+A stall happens whenever the next instruction cannot proceed: either because it needs a result that is not ready yet, or because the data it needs is far away in the memory hierarchy.
+
+Answerlist
+----------
+* 1. A true data dependency: the instruction must wait for the previous result.
+* 0. A cache hit is short enough to be absorbed by the pipeline.
+* 1. A cache miss going to DRAM costs hundreds of cycles and stalls the pipeline.
+* 0. Unrolling removes overhead and reduces stalls, it does not cause them.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2024-09|cpu|pipeline

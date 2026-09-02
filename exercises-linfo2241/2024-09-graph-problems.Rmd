@@ -1,0 +1,47 @@
+Question
+========
+A graph shows the throughput of a system in Gbps against the number of CPUs, from 1 to 8. It is titled 'script.npf', its single curve is labelled 'local' in the legend, and its Y axis starts at 50 Gbps.
+
+Tick all the problems of that graph.
+
+
+Answerlist
+----------
+* X units
+* X label
+* Y label
+* Bad graph type
+* X Range
+* Y Range
+* Graph title
+* Graph legend
+* Grid
+* Color
+
+Solution
+========
+The title and the legend carry no information for the reader, and truncating the Y axis so that it does not start at zero visually exaggerates the growth.
+
+Answerlist
+----------
+* 0. A number of CPUs is a count and needs no unit.
+* 0. The X axis is labelled CPU, which is acceptable.
+* 0. The Y axis is labelled Throughput, which is correct.
+* 0. A line over an increasing number of cores is an acceptable choice here.
+* 0. The X range covers exactly the measured points, from 1 to 8.
+* 1. The Y axis does not start at zero, which visually exaggerates the slope.
+* 1. 'script.npf' is the name of a script, it tells the reader nothing about the experiment.
+* 1. 'local' is meaningless to a reader who did not run the experiment.
+* 0. The graph does have a grid, which helps reading values.
+* 0. Color is not a problem on a single-curve graph.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 0000011100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Data visualization
+extags: 2024-09|dataviz

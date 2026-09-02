@@ -124,6 +124,12 @@ MCQ marks come from a fill-ratio test over the known bubble rectangles on the sa
 
 Stack decided earlier: FastAPI (native WebSockets), React/TypeScript, question bank as Git-versioned YAML plus a DB for index and usage history, Tectonic for LaTeX, LLM abstraction over local Ollama and OpenAI-compatible endpoints.
 
+**Where the effort actually goes** — none of these are solved by the capture step:
+
+- Robust dewarping of phone photos and skewed scanner output. Fiducials plus a homography handle a lot; heavy perspective and page curl do not.
+- The grading UI. Gradescope's speed comes from the group-then-rubric loop and keyboard shortcuts, not from AI. Copy it carefully, or inherit it from Plom.
+- LLM reliability on handwriting. Prior art: *Grading Handwritten Engineering Exams with Multimodal Large Language Models* (arXiv 2601.00730). Only its metadata was retrieved here — read it before fixing prompts and confidence thresholds.
+
 **Human-in-the-loop contract:** an LLM output is a *proposal attached to a rubric item*, always displayed next to the crop, never a silently applied mark.
 
 ## Environment gotchas

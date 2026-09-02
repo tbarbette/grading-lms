@@ -1,0 +1,36 @@
+Question
+========
+A company must decide whether to keep its current servers for 3 more years or replace them now. The service must support 20 000 req/s.
+
+Option A, keep: each server handles 200 req/s and draws 250 W; they were manufactured 4 years ago so their manufacturing emissions are not counted again.
+Option B, replace: each new server handles 500 req/s and draws 150 W, manufacturing 3000 kg CO2e amortized linearly over 5 years, so only the part matching the horizon is charged.
+
+Electricity is 160 g CO2e/kWh, horizon 3 years of 365 days. Ignore scope 1 and end of life.
+
+Compute the counts, the manufacturing charged, the operational emissions, the totals, say which is better, and below which carbon intensity the other option would win.
+
+Solution
+========
+Three years is 3 x 365 x 24 = 26 280 hours.
+
+Counts: A 20000/200 = 100 servers; B 20000/500 = 40 servers.
+
+Manufacturing charged: A 0, already emitted. B 3000 x 3/5 = 1800 kg per server, so 40 x 1800 = 72 000 kg.
+
+Electricity: A 100 x 250 = 25 000 W, so 657 000 kWh, times 160 g = 105 120 kg.
+  B 40 x 150 = 6 000 W, so 157 680 kWh, times 160 g = 25 229 kg.
+
+Totals: A 105 120 kg; B 97 229 kg. Replacing is better, but only by about 8 percent, which is well inside the uncertainty of these figures.
+
+Break-even: with an intensity I in g CO2e/kWh, A costs 657 x I kg and B costs 72 000 + 157.68 x I kg. A becomes better when 657 I < 72 000 + 157.68 I, that is I < 144 g CO2e/kWh.
+
+So below about 144 g CO2e/kWh, keeping the old servers wins. In a country with a low carbon mix, France at roughly 60 g or Sweden lower still, the electricity saved by new hardware is almost free of carbon, so it can never repay the manufacturing debt: you should keep the hardware as long as possible. The greener the grid, the more the embodied carbon dominates, and the worse it is to replace working machines.
+
+Meta-information
+================
+extype: string
+exsolution: A 105 t, B 97 t, replace slightly better, break-even 144 g/kWh
+exauthor: Tom Barbette
+expoints: 3
+exsection: Sustainability
+extags: 2026-08|sustainability|co2e

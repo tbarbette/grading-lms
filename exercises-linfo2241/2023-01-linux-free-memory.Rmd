@@ -1,0 +1,18 @@
+Question
+========
+How is Linux using free memory to accelerate I/O requests? What happens when the free memory effectively becomes scarce?
+
+Solution
+========
+Linux uses all otherwise unused memory as a page cache: blocks that are read from disk are kept in memory, and writes are absorbed there and flushed later. This is why free memory on a running Linux is normally close to zero, which is not a problem.
+
+When memory becomes scarce, the kernel reclaims: clean page cache pages are simply dropped, dirty ones must first be written back to the device, and under real pressure anonymous pages get swapped out. Reclaiming is why a burst of allocations can suddenly become slow, and in the worst case the OOM killer terminates a process.
+
+Meta-information
+================
+extype: string
+exsolution: page cache, reclaimed under pressure
+exauthor: Tom Barbette
+expoints: 3
+exsection: Operating system
+extags: 2023-01|os|io

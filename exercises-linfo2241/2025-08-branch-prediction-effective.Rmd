@@ -1,0 +1,33 @@
+Question
+========
+Branch prediction is effective when what?
+
+
+Answerlist
+----------
+* Fixed function calls
+* Branches are unpredictable
+* Branches are predictable
+* The TLB miss rate is low
+
+Solution
+========
+The predictor learns from history. It pays off when the branch behaves consistently, for instance a loop that is taken many times in a row. A branch whose outcome looks random cannot be learned and every misprediction flushes the pipeline.
+
+Answerlist
+----------
+* 0. A direct call is not even a conditional branch to predict.
+* 0. This is the worst case: every misprediction costs a pipeline flush.
+* 1. A regular, learnable outcome is what makes the predictor accurate.
+* 0. The TLB is unrelated to branch prediction.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2025-08|cpu|pipeline

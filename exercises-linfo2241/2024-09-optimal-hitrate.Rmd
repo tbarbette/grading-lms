@@ -1,0 +1,33 @@
+Question
+========
+For the reference string A B C D A B E A B C D E on a 3-element cache, what is the best maximum hit rate, given a replacement algorithm that can even see the future (without prefetching)?
+
+
+Answerlist
+----------
+* 42%
+* 50%
+* 100%
+* 58%
+
+Solution
+========
+The optimal algorithm evicts the element whose next use is the farthest in the future. On this string it obtains 5 hits out of 12 accesses, i.e. about 42 percent. The first three accesses are compulsory misses that no algorithm can avoid.
+
+Answerlist
+----------
+* 1. The optimal policy reaches 5 hits out of 12 accesses, i.e. 41.7 percent.
+* 0. Too optimistic; the compulsory misses on A, B and C alone forbid it.
+* 0. The first accesses to each element are compulsory misses.
+* 0. This is the miss rate of the optimal policy, not its hit rate.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-09|caches

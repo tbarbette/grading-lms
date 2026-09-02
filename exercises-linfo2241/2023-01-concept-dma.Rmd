@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**DMA**
+
+Solution
+========
+Direct Memory Access. The device reads and writes host memory on its own, without the CPU copying each byte. Its most important use is to move data between a device and memory while the CPU does something else, which is what makes high speed network and storage possible.
+
+Meta-information
+================
+extype: string
+exsolution: DMA
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

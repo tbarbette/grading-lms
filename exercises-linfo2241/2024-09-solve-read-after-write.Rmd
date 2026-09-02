@@ -1,0 +1,33 @@
+Question
+========
+How can some read after write dependencies be solved?
+
+
+Answerlist
+----------
+* More ALUs
+* Branch prediction
+* Speculation
+* Register renaming
+
+Solution
+========
+When the dependency is only a reuse of the same architectural register name and not a real flow of data, giving the two instructions different physical registers removes the dependency entirely.
+
+Answerlist
+----------
+* 0. More execution units do not help if the operand is not available yet.
+* 0. Branch prediction addresses control hazards, not data hazards.
+* 0. Speculation addresses control hazards, not register dependencies.
+* 1. Mapping architectural registers onto a larger physical register file removes the false dependencies.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0001
+exauthor: Tom Barbette
+expoints: 1
+exsection: CPU
+extags: 2024-09|cpu|pipeline

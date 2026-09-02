@@ -1,0 +1,33 @@
+Question
+========
+When measuring the performance of a system, what is the name of the capacity threshold at which the performance gain starts to decrease, i.e. is not linear anymore?
+
+
+Answerlist
+----------
+* Knee capacity
+* Nominal capacity
+* Useable capacity
+* Limit capacity
+
+Solution
+========
+The knee is the point of the curve where adding resources stops paying off linearly.
+
+Answerlist
+----------
+* 1. The knee is exactly the point where the curve leaves its linear regime.
+* 0. The nominal capacity is the ideal linear scaling, not the point where it is left.
+* 0. The useable capacity is bounded by a response time requirement.
+* 0. This is not one of the capacity definitions seen in the course.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Capacity
+extags: 2025-01|capacity

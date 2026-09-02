@@ -1,0 +1,29 @@
+Question
+========
+Consider a server with one service station and infinite buffer capacity. Measurements give a mean time to answer a request of 20 ms and a variance of 10 ms. The server receives a request every 100 milliseconds on average according to a Poisson distribution.
+
+(a) What is the expected waiting time of the jobs?
+(b) What is the expected response time of the server?
+
+Solution
+========
+Poisson arrivals and a general service time give an M/G/1 queue, so Pollaczek Khinchine applies and needs the second moment.
+
+E[S] = 20 ms, Var(S) = 10, so E[S2] = Var + E[S]^2 = 10 + 400 = 410 ms2.
+
+lambda = 1/100 = 0.01 per ms, so rho = 0.01 x 20 = 0.2.
+
+(a) E[W] = lambda x E[S2] / (2 (1 - rho)) = (0.01 x 410) / (2 x 0.8) = 4.1 / 1.6 = 2.56 ms.
+
+(b) E[R] = E[W] + E[S] = 2.56 + 20 = 22.56 ms.
+
+The classic mistake is to plug the variance directly into the formula instead of the second moment.
+
+Meta-information
+================
+extype: string
+exsolution: E[W] about 2.56 ms, E[R] about 22.56 ms
+exauthor: Tom Barbette
+expoints: 4
+exsection: Queueing theory
+extags: 2024-09|queueing

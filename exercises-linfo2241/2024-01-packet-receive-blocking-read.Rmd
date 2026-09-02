@@ -1,0 +1,32 @@
+Question
+========
+Draw all the main steps involved in receiving a packet for a process calling read on a socket, the NIC using interrupts.
+
+The diagram starts at the point where the process calls read() on an already open socket. The data to be received has not been received by the NIC yet when the call is made, and the process uses a blocking mechanism.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,86,22,99); text(11.5,93,"NIC",cex=.85)
+rect(1,40,99,85); text(9,43,"Kernel Space",cex=.85)
+rect(1,1,99,38);  text(8,35,"User Space",cex=.85)
+```
+
+Solution
+========
+1. The process calls read(), which traps into the kernel. The socket receive buffer is empty, so the process is put to sleep on the socket wait queue and the scheduler elects somebody else.
+2. The frame arrives on the wire. The NIC DMAs it into a receive buffer that the driver had posted in advance, then raises an interrupt.
+3. The interrupt handler acknowledges the NIC and schedules the bottom half, softirq or NAPI, so that the hard interrupt stays short.
+4. The softirq runs the TCP/IP stack: the protocol headers are checked and stripped, and the payload is queued in the receive buffer of the matching socket.
+5. Queueing the data wakes the process waiting on that socket, which becomes runnable.
+6. The scheduler eventually elects it, the read call resumes in the kernel, copies the payload from the socket buffer into the user buffer, and returns to user space with the number of bytes.
+
+The drawing must place the NIC in hardware, the driver, interrupt handling and the stack in kernel space, and the process in user space, with the system call and the interrupt shown as the two boundary crossings.
+
+Meta-information
+================
+extype: string
+exsolution: blocking read, DMA, IRQ, softirq, wake up, copy
+exauthor: Tom Barbette
+expoints: 5
+exsection: I/O
+extags: 2024-01|io|networking

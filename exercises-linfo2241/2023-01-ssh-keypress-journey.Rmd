@@ -1,0 +1,37 @@
+Question
+========
+Draw a schematic of the journey of a key pressed by a user physically on the keyboard, sent through SSH to a server.
+
+Name the I/O sub-systems involved and the mechanisms used to cross any kind of boundary or involved in scheduling. Identify two sources of slowdown in this journey. Consider that the client is not using a terminal, and start in a state where ssh is blocked, listening for a key stroke through an I/O read system call variant.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(4,22,47,96); text(25,92,"Client",cex=.85)
+rect(53,22,96,96); text(74,92,"Server",cex=.85)
+rect(8,74,43,88); text(25,81,"ssh client process",cex=.7)
+rect(57,74,92,88); text(74,81,"sshd server process",cex=.7)
+segments(4,56,47,56); segments(53,56,96,56)
+text(11,59,"Userlevel",cex=.7); text(10,52,"Kernel",cex=.7)
+text(60,59,"Userlevel",cex=.7); text(59,52,"Kernel",cex=.7)
+rect(2,4,24,17); text(13,10,"USB Controller",cex=.7)
+rect(30,4,47,17); text(38,10,"NIC",cex=.7)
+rect(53,4,70,17); text(61,10,"NIC",cex=.7)
+segments(47,10,53,10)
+```
+
+Solution
+========
+Client side: the key press raises an interrupt from the USB controller, the USB HID driver reads the scan code, the input subsystem makes it available on the character device, which unblocks the ssh process. The scheduler must actually elect ssh, which crosses back to user level. ssh encrypts the byte and issues a write system call on the socket, the TCP/IP stack builds the segment, the driver hands a descriptor to the NIC which DMAs the buffer and sends it.
+
+Server side: the NIC DMAs the frame into memory and raises an interrupt, the driver and softirq push the packet through the TCP/IP stack into the socket receive buffer, which wakes sshd, which is then scheduled and decrypts the byte.
+
+Two important sources of slowdown: the boundary crossings and the context switches on each side (interrupt, then scheduler latency before the blocked process is actually elected), and the network round trip itself, which dominates as soon as the two machines are far apart. Interrupt coalescing and Nagle style buffering also add delay to a single byte.
+
+Meta-information
+================
+extype: string
+exsolution: interrupts, syscalls, scheduling, network RTT
+exauthor: Tom Barbette
+expoints: 5
+exsection: I/O
+extags: 2023-01|io|networking

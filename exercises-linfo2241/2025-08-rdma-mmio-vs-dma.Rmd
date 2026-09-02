@@ -1,0 +1,29 @@
+Question
+========
+RDMA uses Work Queue Elements to ask the NIC to execute an operation on remote memory. With MMIO, each WQE is written directly from the CPU to memory mapped regions of the NIC using store instructions, and for every WQE the CPU must perform and wait for a separate PCIe write transaction. With DMA, the CPU prepares a region of contiguous WQEs in system memory, then performs a single small MMIO write to a doorbell register; the NIC then fetches the batch in one or a few larger PCIe read transactions.
+
+Draw a diagram representing (a) the MMIO technique, (b) the DMA-based one, and (c) one of the optimizations discussed: WQE shrinking and inlining, multi-queue utilization, or cache miss avoidance.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,64,99,99); text(88,95,"Computer Hardware",cex=.8)
+rect(1,1,99,60);  text(88,56,"Computer Software",cex=.8)
+segments(1,30,99,30,lty=2)
+```
+
+Solution
+========
+(a) MMIO: CPU, then one arrow per WQE crossing PCIe as a posted write into the NIC BAR. N WQEs mean N transactions, each with its own overhead, and the CPU is occupied for all of them. Good for a single small WQE because the latency is minimal, bad as soon as there are many.
+
+(b) DMA with doorbell: the CPU writes the N WQEs into a contiguous buffer in host memory, then a single small MMIO write to the doorbell register tells the NIC that N entries are ready. The NIC issues one or a few large PCIe reads to fetch them. Draw the two distinct arrows, the small doorbell write going down and the big DMA read going up. One transaction amortized over N WQEs, at the cost of one extra round trip of latency.
+
+(c) For example multi-queue: several queue pairs, each bound to a different processing unit of the NIC, with one CPU core per queue pair, so the units work in parallel instead of serialising on one. Or cache miss avoidance: the WQE is kept in the NIC cache between its posting and its completion, so if too many WQEs are posted meanwhile it is evicted and must be re-read over PCIe, which is why the number of outstanding WQEs must be bounded. Or inlining: a small payload is placed inside the WQE so the NIC does not have to issue a second PCIe read to fetch the data, keeping the whole thing within one cacheline.
+
+Meta-information
+================
+extype: string
+exsolution: MMIO per-WQE writes vs doorbell plus batched DMA read
+exauthor: Tom Barbette
+expoints: 4
+exsection: Networking
+extags: 2025-08|networking|rdma

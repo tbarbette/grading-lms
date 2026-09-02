@@ -1,0 +1,37 @@
+Question
+========
+What are the techniques used by GPUs to hide memory latency?
+
+
+Answerlist
+----------
+* Less level of caches
+* High memory bandwidth
+* Hardware-based context switches between threads
+* Speculative execution
+* RT cores
+* Just-in-time compilation
+
+Solution
+========
+A GPU does not try to make a single memory access fast. It keeps a very large number of threads resident and switches between them in hardware at no cost, so that whenever a warp stalls on memory another one is ready to run. This is backed by very wide, high bandwidth memory.
+
+Answerlist
+----------
+* 0. Having fewer cache levels does not hide latency, it exposes it.
+* 1. Wide, high bandwidth memory lets many outstanding requests be served in parallel.
+* 1. Zero-cost hardware switching between resident warps keeps the execution units busy while others wait on memory.
+* 0. This is a latency hiding technique of large out-of-order CPUs, not of GPUs.
+* 0. Ray tracing units are fixed function accelerators, unrelated to memory latency.
+* 0. Compilation happens before execution and does not hide memory latency at run time.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 011000
+exauthor: Tom Barbette
+expoints: 1
+exsection: GPU
+extags: 2024-01|gpu

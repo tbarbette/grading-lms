@@ -1,0 +1,33 @@
+Question
+========
+Which I/O technique allows the process to continue execution while the I/O is still being performed?
+
+
+Answerlist
+----------
+* Blocking I/O
+* Non-blocking I/O
+* Async I/O
+* Buffered I/O
+
+Solution
+========
+With asynchronous I/O the process submits the operation and immediately goes on doing useful work; the completion is signalled later. Non-blocking I/O only avoids sleeping: it returns immediately telling you that nothing is ready yet, and you have to come back and ask again.
+
+Answerlist
+----------
+* 0. The process is put to sleep until the operation completes.
+* 0. It returns immediately without performing the operation, so you must poll again.
+* 1. The operation is started in the background and the process is notified on completion.
+* 0. Buffering reduces the number of calls but does not by itself overlap I/O with computation.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: I/O
+extags: 2025-08|io

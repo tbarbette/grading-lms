@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**ALU**
+
+Solution
+========
+Arithmetic Logic Unit. The functional unit that performs the arithmetic and logic operations of the CPU. Having several of them is what allows a superscalar CPU to execute several instructions in the same cycle.
+
+Meta-information
+================
+extype: string
+exsolution: ALU
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

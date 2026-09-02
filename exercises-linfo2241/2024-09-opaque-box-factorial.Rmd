@@ -1,0 +1,32 @@
+Question
+========
+An opaque system has the following factors: `NB_CPU_CORES` between 1 and 8, `NB_TCP_CONNECTIONS` between 1 and 8, `ZERO_COPY` true or false, `CONGESTION` bbr, reno or vegas. A workload generator outputs a THROUGHPUT value for each combination.
+
+(a) How many combinations would a full factorial design require?
+(b) Each test runs 1 minute and we want 5 repetitions. What is the total execution time?
+(c) Name an experimental design that explores the influence of each parameter without running that long.
+(d) How many combinations would that experiment create, without repetition?
+(e) The feature importances come out as `NB_CPU_CORES` 0.43, `NB_TCP_CONNECTIONS` 0.30, `ZERO_COPY` 0.01, `CONGESTION` 0.05. What should you do for the final design, and what is especially important to verify?
+
+Solution
+========
+(a) 8 x 8 x 2 x 3 = 384 combinations.
+
+(b) 384 x 5 x 1 min = 1920 minutes = 32 hours.
+
+(c) A one factor at a time sweep, or a fractional factorial design.
+
+(d) Varying one factor at a time from a baseline: (8-1) + (8-1) + (2-1) + (3-1) + 1 baseline = 18 combinations.
+
+(e) Drop the two factors that do not matter by fixing `ZERO_COPY` and `CONGESTION` at a sensible value, and spend the budget on a full factorial over `NB_CPU_CORES` and `NB_TCP_CONNECTIONS` with all their levels and enough repetitions.
+
+What is especially important to verify is the interaction between the two remaining factors. The screening design gave you their individual importance but by construction cannot see whether the best number of connections depends on the number of cores, which is very likely here. That is precisely why the final design must be full factorial on those two and not another one at a time sweep.
+
+Meta-information
+================
+extype: string
+exsolution: 384, 32 h, OAT, 18, full factorial on top 2, check interaction
+exauthor: Tom Barbette
+expoints: 3
+exsection: Methodology
+extags: 2024-09|methodology

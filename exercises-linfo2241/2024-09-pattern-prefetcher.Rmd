@@ -1,0 +1,33 @@
+Question
+========
+What prefetcher looks for a constant pattern in the memory accesses?
+
+
+Answerlist
+----------
+* Stream Prefetcher
+* Pattern Prefetcher
+* Stride Prefetcher
+* Jump Prefetcher
+
+Solution
+========
+The stride prefetcher detects that the accesses are separated by a constant distance, for instance when walking an array of structures, and issues the next addresses of the same arithmetic progression.
+
+Answerlist
+----------
+* 0. The stream prefetcher follows sequential accesses in a single direction.
+* 0. This is not the name used for this hardware prefetcher.
+* 1. It detects a constant stride between accesses and continues the progression.
+* 0. This is not one of the prefetchers seen in the course.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-09|caches|prefetching

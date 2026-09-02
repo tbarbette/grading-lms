@@ -1,0 +1,33 @@
+Question
+========
+Draw the schematic of what happens when a packet is received from a network interface.
+
+Show the main hardware and software components involved. Anything that is hardware goes in the first box, anything running on the CPU as software in the second. Name the two sides of the dashed line.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,64,99,99); text(88,95,"Computer Hardware",cex=.8)
+rect(1,1,99,60);  text(88,56,"Computer Software",cex=.8)
+segments(1,30,99,30,lty=2)
+```
+
+Solution
+========
+The two sides of the dashed line are kernel space and user space.
+
+Hardware: the NIC receives the frame, checks the CRC, and DMAs it into a receive buffer whose descriptor the driver had posted in advance, in a ring in main memory. It then raises an interrupt, possibly coalesced with others.
+
+Kernel: the interrupt handler acknowledges the device and schedules the bottom half, so the hard interrupt stays short. The softirq or NAPI poll picks the buffers off the ring, hands them to the network stack which validates and strips the Ethernet, IP and TCP or UDP headers, demultiplexes onto the right socket, and appends the payload to that socket's receive buffer. That append wakes any process blocked on the socket.
+
+User space: the process is made runnable, the scheduler elects it, its read or recv system call resumes and copies the payload from the socket buffer into the user buffer.
+
+The drawing must show the DMA arrow from the NIC into memory, the interrupt as the hardware to kernel crossing, and the system call return as the kernel to user crossing. The copy from the socket buffer to the user buffer is worth marking, since it is the cost that zero-copy techniques try to remove.
+
+Meta-information
+================
+extype: string
+exsolution: DMA, IRQ, softirq, stack, socket buffer, wake up, copy
+exauthor: Tom Barbette
+expoints: 4
+exsection: I/O
+extags: 2026-01|io|networking

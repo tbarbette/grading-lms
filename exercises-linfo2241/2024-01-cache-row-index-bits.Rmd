@@ -1,0 +1,35 @@
+Question
+========
+In a set associative cache, we use some bits of the address as a row index. These bits are the ones next to the offset bits.
+
+What happens if we use the most significant bits instead, when we iterate over consecutive data?
+
+
+Answerlist
+----------
+* We will have more contention
+* We will have less contention
+* We will be able to store less data
+* We will be able to store more data
+
+Solution
+========
+Consecutive data differs only in the least significant bits. If the row index is taken from the most significant bits, a whole run of consecutive addresses maps to the same row, so the ways of that single row are the only usable entries and they evict each other.
+
+Answerlist
+----------
+* 1. Consecutive addresses share their most significant bits, so they all land in the same row and fight for the same few ways.
+* 0. The opposite happens: accesses concentrate on one row instead of spreading over all rows.
+* 0. The physical capacity of the cache is unchanged; only the distribution of the accesses changes.
+* 0. The physical capacity of the cache is unchanged.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-01|caches

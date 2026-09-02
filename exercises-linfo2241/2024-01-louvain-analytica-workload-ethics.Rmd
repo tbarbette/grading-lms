@@ -1,0 +1,20 @@
+Question
+========
+How could you get realistic workloads to benchmark Louvain Analytica? What are the ethical limits of your approach? How could you produce a workload that you could release publicly?
+
+Solution
+========
+Realistic workloads come from real traces: the public API of the social media, a public dataset of posts and hashtags, or the production logs of the service if you operate it.
+
+Ethical limits: this is personal data. Scraping a platform usually violates its terms of service, and collecting posts to profile users by interest is exactly the kind of processing the GDPR restricts. Users have not consented to being part of your benchmark, re-identification is easy even from a small number of hashtags, and keeping the raw data around is itself a risk.
+
+To release something publicly you must stop shipping the data and ship its statistics instead. Measure the distributions that matter for performance, number of users per request, number of hashtags, posts per user, popularity skew of the hashtags, then write a generator that samples synthetic users and hashtags from those distributions. The generator and the fitted parameters can be published, they carry no personal data, and anybody can reproduce a workload with the same performance characteristics.
+
+Meta-information
+================
+extype: string
+exsolution: real traces, GDPR limits, synthetic generator
+exauthor: Tom Barbette
+expoints: 2
+exsection: Methodology
+extags: 2024-01|methodology|ethics

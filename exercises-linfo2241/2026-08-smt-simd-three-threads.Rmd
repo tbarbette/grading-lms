@@ -1,0 +1,28 @@
+Question
+========
+Three threads run on a single SMT core with several general purpose functional units but only one SIMD-capable FU, which can only do SIMD. Different threads may run concurrently on the same cycle.
+
+Thread 1: A1 2 cycles; A2 depends on A1, 1 cycle SIMD; A3 2 cycles; A4 depends on A3, 1 cycle; A5 1 cycle.
+Thread 2: B1 1 cycle SIMD; B2 depends on B1, 2 cycles; B3 1 cycle SIMD; B4 depends on B2 and B3, 1 cycle.
+Thread 3: C1 2 cycles; C2 depends on C1, 1 cycle SIMD; C3 2 cycles.
+
+Simulate (a) without reordering, at most one instruction per thread per cycle, with 4 FUs one of which is SIMD; (b) with reordering, 3 FUs one of which is SIMD, up to 2 instructions of the same thread per cycle on different FUs.
+
+Solution
+========
+Four instructions need the single SIMD unit: A2, B1, B3 and C2. They must occupy four distinct cycles, which sets the floor of the schedule, and they are further constrained because A2 cannot start before A1 has completed and C2 not before C1.
+
+Case (a), in order. B1 is the only SIMD instruction ready at cycle 1, since A2 waits for the two cycles of A1 and C2 waits for the two cycles of C1, so issuing B1 first costs nothing and unblocks B2 immediately. A1 and C1 run on general purpose units in parallel during those same cycles. From cycle 3, A2 and C2 are both ready but must be serialised on the SIMD unit, and B3 also competes for it; the order chosen among them decides whether B4, which needs both B2 and B3, is delayed.
+
+Case (b), with reordering and 2 instructions of the same thread per cycle. Thread 1 can issue A1 and A3 together, since they are independent, which brings A4 forward and lets A2 start as soon as the SIMD unit frees up. The SIMD unit remains the bottleneck, so the total barely improves despite the extra issue width, and having only 3 FUs instead of 4 is not binding.
+
+Grade on: never two SIMD instructions in the same cycle, every dependence respected, multi-cycle instructions holding their FU throughout, and the per-cycle issue limits of each variant. The insight worth marks is that the single SIMD FU, not the number of general purpose FUs, sets the length.
+
+Meta-information
+================
+extype: string
+exsolution: see model schedule, 4 SIMD instructions serialise
+exauthor: Tom Barbette
+expoints: 3
+exsection: CPU
+extags: 2026-08|cpu|smt|simd

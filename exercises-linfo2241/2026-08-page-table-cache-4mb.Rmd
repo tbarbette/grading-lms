@@ -1,0 +1,26 @@
+Question
+========
+A system has a 32-bit physical address space and 4 MByte pages. The page table holds: entry 0 frame 0x1D (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 0x2A (P=1, R/W=0, U=1), entry 3 frame 0x9F (P=1, R/W=1, U=0), entry 4 (P=0), entry 5 frame 0x3C1 (P=1, R/W=0, U=1), entry 6 frame 0x14 (P=1, R/W=1, U=1), entry 7 frame 0x2B8 (P=1, R/W=0, U=1).
+
+Give the physical address in hexadecimal, or the reason for the error, for accesses by the user process: (a) a read at 0x01A3F2C4, (b) a write at 0x0154AB08, (c) a read at 0x00E1D330.
+
+Solution
+========
+4 MB pages means the offset is log2(4 x 1024 x 1024) = 22 bits, so the page number is the top 10 bits and the offset the low 22 bits.
+
+(a) 0x01A3F2C4: dividing by 4 MB, 0x01A3F2C4 div 0x400000 = 6, and the offset is 0x01A3F2C4 - 6 x 0x400000 = 0x23F2C4. Entry 6 is present, readable and user accessible, frame 0x14. The physical address is 0x14 x 0x400000 + 0x23F2C4 = 0x05000000 + 0x23F2C4 = 0x0523F2C4.
+
+(b) 0x0154AB08: page 0x0154AB08 div 0x400000 = 5, offset 0x14AB08. Entry 5 has R/W=0 and this is a write, so it is a protection fault, the page is read only.
+
+(c) 0x00E1D330: page 0x00E1D330 div 0x400000 = 3, offset 0x21D330. Entry 3 is present and readable, but it has U=0 and the access comes from the user process, so it is a protection fault: the page is supervisor only.
+
+The last two are the interesting ones, since both entries are present and only the flags reject the access, for two different reasons.
+
+Meta-information
+================
+extype: string
+exsolution: 0x0523F2C4, read-only fault, supervisor-only fault
+exauthor: Tom Barbette
+expoints: 4
+exsection: Virtual memory
+extags: 2026-08|virtual-memory|caches

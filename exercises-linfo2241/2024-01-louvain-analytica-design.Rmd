@@ -1,0 +1,20 @@
+Question
+========
+Propose an experimental design to find out what the important features of Louvain Analytica are. What do you expect in terms of results and their interactions?
+
+Solution
+========
+Start cheap: a fractional design or a one factor at a time sweep over all the candidate parameters, to get a feature importance ranking without paying for the full grid. Then run a full factorial on the two or three factors that came out on top, with enough levels to see the shape of the curve, and at least 5 repetitions so you can report a standard deviation.
+
+Expected results: latency grows with the number of users, probably linearly if each user is classified independently, and with the number of hashtags. The interesting part is the interaction: if the algorithm compares every user against every hashtag the cost is the product, so the two factors interact and neither curve alone tells the story. Concurrency interacts with everything, since past the knee the queueing dominates whatever the request size is.
+
+This is exactly why one factor at a time is not enough: it would miss the product term.
+
+Meta-information
+================
+extype: string
+exsolution: screen, then full factorial on top factors, expect interaction
+exauthor: Tom Barbette
+expoints: 2
+exsection: Methodology
+extags: 2024-01|methodology

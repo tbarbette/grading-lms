@@ -1,0 +1,33 @@
+Question
+========
+What is the total data capacity, in KBytes, of an 8-way set-associative cache with 64 rows and 64-byte cachelines?
+
+
+Answerlist
+----------
+* 16 KB
+* 32 KB
+* 64 KB
+* 4 KB
+
+Solution
+========
+The capacity is the product of the three dimensions: 8 ways times 64 rows times 64 bytes = 32768 bytes = 32 KBytes.
+
+Answerlist
+----------
+* 0. This forgets a factor 2; recompute 8 x 64 x 64.
+* 1. 8 x 64 x 64 = 32768 bytes = 32 KBytes.
+* 0. This is twice the capacity; recompute 8 x 64 x 64.
+* 0. This is the capacity of a single row, 8 x 64 bytes, times 8.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2026-08|caches|converted-to-mcq

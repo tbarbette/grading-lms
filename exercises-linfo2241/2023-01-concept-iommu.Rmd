@@ -1,0 +1,18 @@
+Question
+========
+Explain the following concept, spelling out the acronym first if there is one. Give its definition and its usage, and if it has several usages, its most important one.
+
+**IOMMU**
+
+Solution
+========
+Input Output Memory Management Unit. It translates and checks the addresses used by devices doing DMA. Its most important use is isolation: it prevents a device, or a driver in a virtual machine, from reading or writing arbitrary host memory.
+
+Meta-information
+================
+extype: string
+exsolution: IOMMU
+exauthor: Tom Barbette
+expoints: 1
+exsection: Definitions
+extags: 2023-01|definitions

@@ -1,0 +1,26 @@
+services:
+  amc:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - amc_data:/data
+    environment:
+      - AMC_PROJECTS_DIR=/data/projects
+      - LLM_PROVIDER=ollama
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLM_MODEL=qwen2.5vl:3b
+
+  # Optional local LLM for the transcription-assist customization.
+  # Start with: docker compose --profile llm up
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["llm"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  amc_data:
+  ollama_data:

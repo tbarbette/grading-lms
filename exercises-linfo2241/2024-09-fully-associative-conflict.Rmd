@@ -1,0 +1,33 @@
+Question
+========
+In a fully associative cache, what do two addresses that are in conflict share?
+
+
+Answerlist
+----------
+* Index
+* Tag
+* Offset
+* Address size
+
+Solution
+========
+A fully associative cache has no row index: an address is split into a tag and an offset only. Two addresses collide when they have the same tag, that is when they designate the same block.
+
+Answerlist
+----------
+* 0. A fully associative cache has no index bits at all.
+* 1. With no index, the tag is the whole block address, so conflicting addresses share their tag.
+* 0. The offset selects a byte inside the line and plays no role in placement.
+* 0. All addresses have the same size; this says nothing about a conflict.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2024-09|caches

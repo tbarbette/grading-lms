@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Correction — {{ meta.name }}{% endblock %}
+{% block content %}
+<h1>Correction — {{ meta.name }}</h1>
+<p><a href="/projects/{{ pid }}">&larr; Retour au projet</a></p>
+
+<p>Zones de réponse capturées automatiquement par AMC (image déjà recadrée/alignée
+   par AMC lui-même à partir du scan) pour les questions définies comme une
+   grande boîte cochable (voir <code>test-data/source.tex</code>, question
+   "explain"). Aucun upload manuel : l'image vient directement de
+   <code>capture.sqlite</code>.</p>
+
+{% if not cells %}
+<p><em>Aucune zone capturée pour l'instant. Lancez prepare puis analyse d'abord.</em></p>
+{% endif %}
+
+{% for cell in cells %}
+<section>
+  <h3>Étudiant {{ cell.student }} — question "{{ cell.question }}"</h3>
+  <img src="/projects/{{ pid }}/zone-image/{{ cell.student }}/{{ cell.question }}"
+       alt="zone capturée" style="max-width: 400px; border: 1px solid #ccc;">
+
+  <form method="post" action="/projects/{{ pid }}/grading/{{ cell.student }}/{{ cell.question }}/transcribe">
+    <button type="submit">Transcrire avec le LLM</button>
+  </form>
+  {% if cell.suggestion %}<pre>Suggestion LLM : {{ cell.suggestion }}</pre>{% endif %}
+
+  <form method="post" action="/projects/{{ pid }}/rubric/items">
+    <input type="hidden" name="question" value="{{ cell.question }}">
+    <label>Libellé</label>
+    <input type="text" name="label" required>
+    <label>Points (+/-)</label>
+    <input type="number" step="0.25" name="delta" required>
+    <button type="submit">Ajouter un item de rubrique pour "{{ cell.question }}"</button>
+  </form>
+
+  <form method="post" action="/projects/{{ pid }}/rubric/apply">
+    <input type="hidden" name="student" value="{{ cell.student }}">
+    <input type="hidden" name="question" value="{{ cell.question }}">
+    <label>Item id à appliquer</label>
+    <input type="number" name="item_id" required>
+    <button type="submit">Appliquer</button>
+  </form>
+
+  {% if rubric['items'].get(cell.question) %}
+    <p>Items disponibles :
+    {% for it in rubric['items'][cell.question] %}
+      [{{ it.id }}] {{ it.label }} ({{ it.delta }}){{ ", " if not loop.last }}
+    {% endfor %}
+    </p>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}

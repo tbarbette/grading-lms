@@ -1,0 +1,16 @@
+Question
+========
+What is the size of a page in modern systems?
+
+Solution
+========
+4 KBytes, that is 4096 bytes, which is the default on x86 and on most architectures. Huge pages of 2 MB and 1 GB also exist and are used to increase the TLB reach.
+
+Meta-information
+================
+extype: string
+exsolution: 4 KB
+exauthor: Tom Barbette
+expoints: 1
+exsection: Virtual memory
+extags: 2024-09|virtual-memory

@@ -1,0 +1,33 @@
+Question
+========
+What is false sharing?
+
+
+Answerlist
+----------
+* Two cores writing to the same variable without a lock
+* Two cores writing to different variables that happen to sit in the same cache line
+* A page shared between two processes with different permissions
+* A cache line that is evicted before it is ever read
+
+Solution
+========
+Coherency works at the granularity of a cache line, not of a variable. Two cores writing to two distinct variables that happen to live in the same line will keep invalidating each other's copy, as if they were sharing the data, hence the name.
+
+Answerlist
+----------
+* 0. That is a genuine data race, not false sharing.
+* 1. The line ping-pongs between the two caches although the variables are independent.
+* 0. This is a virtual memory question, unrelated to cache coherency.
+* 0. This is a useless prefetch, not false sharing.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Multicore
+extags: 2026-08|multicore|caches

@@ -1,0 +1,33 @@
+Question
+========
+Why is latency important? Precisely, what is the impact of having a high latency?
+
+
+Answerlist
+----------
+* Direct impact on sales
+* More CPU usage
+* Limits the useable capacity
+* More queuing
+
+Solution
+========
+Latency is what the user feels, and it is also what bounds how much load you may actually put on a system: past a certain point the response time requirement is violated even though the machine could still accept more work.
+
+Answerlist
+----------
+* 1. Measured repeatedly in industry: added response time directly reduces conversion and revenue.
+* 0. High latency is often the consequence of a bottleneck, it does not itself create CPU usage.
+* 1. The useable capacity is precisely the load still respecting a response time bound.
+* 0. Queuing causes latency rather than the other way around.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 1010
+exauthor: Tom Barbette
+expoints: 1
+exsection: Metrics
+extags: 2025-08|metrics|latency

@@ -1,0 +1,33 @@
+Question
+========
+io_uring replaces the one-call-per-operation model with two circular buffers allocated by the kernel and mapped into the address space of the process. The submission queue holds descriptors of operations, the completion queue holds the results. To submit, the application writes entries and advances a shared index, then makes a single system call announcing N new entries. Completions are read straight out of the shared queue without any system call. Two optional modes exist: submission queue polling, where a kernel thread spins on the queue, and I/O polling, where the kernel busy-waits on the device completion queue instead of waiting for an interrupt.
+
+(a) The fixed cost of a system call has grown on modern hardware. Name the family of hardware vulnerabilities responsible and explain what the CPU mechanism behind them does.
+(b) Draw a diagram of the submission and completion path, showing the process, the kernel, the two rings and the device, and where a boundary crossing happens or does not.
+(c) Give one situation where I/O polling is a good idea and one where it is bad, justified with the metrics of the course.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,36,99,99); text(14,96,"Computer - Software",cex=.8)
+segments(1,66,99,66,lty=2,lwd=2)
+rect(1,1,99,33);  text(14,30,"Computer - Hardware",cex=.8)
+```
+
+Solution
+========
+(a) The Spectre and Meltdown family, that is the speculative execution vulnerabilities. Speculative execution lets the CPU run instructions before it knows whether they should run, for instance past a branch whose condition is not resolved yet or past a permission check. The architectural results are discarded on a misprediction, but the microarchitectural traces, above all the cachelines that were brought in, are not, and they can be read back through a timing side channel. The mitigations flush or partition that state on every privilege transition, which is exactly what made the boundary crossing expensive.
+
+(b) Both rings live in memory shared by the process and the kernel, so drawing them straddling the boundary is the point. Submission: the process writes SQEs into the submission ring and advances the tail index, entirely in user space with no crossing; then one io_uring_enter system call announces N entries, and that single crossing is amortized over all N. The kernel consumes the batch and issues the operations to the device, by posting descriptors and ringing a doorbell. Completion: the device signals completion, normally by interrupt, the kernel writes CQEs into the completion ring and advances its index, and the process reads them straight from shared memory with no system call at all. Mark clearly the one crossing on submission and the zero crossings on completion, and note that with submission queue polling even that one disappears.
+
+(c) Good: a fast NVMe device driven at high load, where the device answers in a handful of microseconds. The interrupt and the wake-up would cost as much as the operation itself, so polling removes them and gives lower and far more predictable latency, which is what a tail latency requirement needs. You are trading a metric you have plenty of, CPU cycles, for the one that is scarce.
+
+Bad: a lightly loaded system, or a slow device. The polling thread burns an entire core doing nothing while it waits, which destroys throughput per core and energy efficiency, and on a shared machine it steals CPU from everything else. The gain in latency is real but you pay for it continuously, whether or not there is work.
+
+Meta-information
+================
+extype: string
+exsolution: Spectre/Meltdown, shared rings, one crossing to submit none to complete
+exauthor: Tom Barbette
+expoints: 3
+exsection: I/O
+extags: 2026-08|io|io_uring

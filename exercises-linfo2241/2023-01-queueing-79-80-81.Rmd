@@ -1,0 +1,30 @@
+Question
+========
+Consider a server with one service station and infinite buffer capacity. The distribution of the service time is: 20 requests at 79 ms, 40 requests at 80 ms and 20 requests at 81 ms. The server receives a request every 140 milliseconds on average, according to a Poisson distribution.
+
+(a) What is the expected response time of the server?
+(b) What is the expected waiting time of the jobs?
+
+Solution
+========
+Arrivals are Poisson and the service time is general, so this is an M/G/1 queue.
+
+E[S] = (20 x 79 + 40 x 80 + 20 x 81) / 80 = 6400 / 80 = 80 ms.
+E[S2] = (20 x 79^2 + 40 x 80^2 + 20 x 81^2) / 80 = 512040 / 80 = 6400.5 ms2.
+
+lambda = 1/140 per ms, so rho = lambda x E[S] = 80/140 = 0.571.
+
+Pollaczek Khinchine: E[W] = lambda x E[S2] / (2 (1 - rho)) = (6400.5/140) / (2 x 0.4286) = 45.72 / 0.857 = 53.3 ms.
+
+E[R] = E[W] + E[S] = 53.3 + 80 = 133.3 ms.
+
+So the response time is about 133 ms and the waiting time about 53 ms. Note how a service time that is almost deterministic still produces 53 ms of queueing, purely because the arrivals are bursty.
+
+Meta-information
+================
+extype: string
+exsolution: E[R] about 133 ms, E[W] about 53 ms
+exauthor: Tom Barbette
+expoints: 4
+exsection: Queueing theory
+extags: 2023-01|queueing

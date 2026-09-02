@@ -1,0 +1,20 @@
+Question
+========
+Should you spend time developing the parallelizable part of your algorithm with SIMD or MIMD? What are the advantages and disadvantages of both?
+
+Solution
+========
+SIMD applies one instruction to several data elements inside a single core. It is nearly free at run time since there is no synchronisation, no thread, no cache coherency traffic, and it also reduces the instruction count and therefore the energy. But it demands regular, contiguous, ideally aligned data with no divergent control flow, the width is fixed by the ISA so the gain is capped at 4, 8 or 16, and the code becomes intrinsic-specific and less portable.
+
+MIMD runs different instructions on different cores. It scales with the number of cores, tolerates irregular work and branches, and is what you need for coarse grained parallelism. But you pay for thread creation, synchronisation, load imbalance and false sharing, the speedup is bounded by Amdahl's law on the serial part, and debugging concurrency is much harder.
+
+In practice they are not exclusive and the right answer is to do both: vectorise the inner loop with SIMD and distribute the outer loop over cores with MIMD. If you must choose, start with SIMD when the kernel is a regular numeric loop, because it is cheaper to obtain and composes with the other.
+
+Meta-information
+================
+extype: string
+exsolution: SIMD for regular inner loops, MIMD for coarse grain, combine both
+exauthor: Tom Barbette
+expoints: 2
+exsection: Parallelism
+extags: 2025-01|parallelism|simd

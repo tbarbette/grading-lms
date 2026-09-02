@@ -1,0 +1,29 @@
+Question
+========
+Put the steps of the systematic approach in order, writing something like CDEAB. This is a subset of the 10 steps seen in the course.
+
+A) Select workload
+B) State goals and define system
+C) Select factors
+D) Design experiments
+E) List Parameters
+F) Select evaluation technique
+G) Analyze data
+H) Select Metrics
+
+Solution
+========
+You first decide what you are studying and why, then what you will measure, then what may influence it, then how and with what you will measure, and only at the end you run and interpret.
+
+State goals and define the system, select metrics, list parameters, select factors, select the evaluation technique, select the workload, design the experiments, analyze the data.
+
+Answer: BHECFADG
+
+Meta-information
+================
+extype: string
+exsolution: BHECFADG
+exauthor: Tom Barbette
+expoints: 1
+exsection: Methodology
+extags: 2024-01|methodology

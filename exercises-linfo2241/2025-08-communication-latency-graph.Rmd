@@ -1,0 +1,38 @@
+Question
+========
+Draw an approximate graph of the latency, in microseconds to milliseconds, of sending a message through different levels of communication: an intra-process function call, inter-process communication on the same machine, local TCP loopback, LAN over Ethernet, WAN across the country, and Internet across a continent.
+
+The X and Y axes are free but should be chosen wisely.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.0}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,1,99,99)
+arrows(12,10,94,10,length=.1); arrows(12,10,12,92,length=.1)
+text(53,5,"Level of communication",cex=.8); text(6,50,"Latency (log)",srt=90,cex=.8)
+```
+
+Solution
+========
+The Y axis must be logarithmic: the values span about seven orders of magnitude. The X axis is the level of communication, an ordered categorical axis, so a bar chart or points with a connecting line both work.
+
+Approximate values:
+
+- Function call: about 1 to 10 ns, that is 0.001 us.
+- IPC on the same machine, pipe or Unix socket: about 5 to 20 us, dominated by the two boundary crossings and the copy.
+- TCP loopback: about 20 to 50 us, the full stack is traversed twice.
+- LAN Ethernet: about 100 to 500 us.
+- WAN across the country: about 5 to 20 ms.
+- Internet across a continent: about 100 to 150 ms, bounded by the speed of light in fibre.
+
+The message of the graph is that each step up costs roughly an order of magnitude, and that beyond the LAN it is physics rather than software that sets the floor.
+
+Expected of the graph: a labelled Y axis with its unit, an explicit log scale, and readable category labels.
+
+Meta-information
+================
+extype: string
+exsolution: log Y, 1 ns function call to about 120 ms cross-continent
+exauthor: Tom Barbette
+expoints: 3
+exsection: Metrics
+extags: 2025-08|metrics|dataviz

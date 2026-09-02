@@ -1,0 +1,31 @@
+Question
+========
+Draw the schematic of what happens when a USB key, USB Mass Storage, is plugged into the computer.
+
+Draw the main hardware and software components involved. In software there is a process called nautilus that has been using asynchronous I/O to be notified when this kind of device is plugged in. Be sure to draw the important operating system boundaries and to put things at the right place with respect to those boundaries.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,64,99,99); text(88,95,"Computer Hardware",cex=.8)
+rect(1,1,99,60);  text(88,56,"Computer Software",cex=.8)
+segments(1,30,99,30,lty=2)
+```
+
+Solution
+========
+Hardware: the key is plugged into a port of the USB host controller, which sits on PCIe. The controller detects the electrical connection and raises an interrupt.
+
+Kernel: the USB core enumerates the device, reads its descriptors and sees the Mass Storage class, so it binds the usb-storage driver, which exposes it through the SCSI layer as a block device. The block layer creates the device node, the partition table is read, and udev is notified. The filesystem driver is attached when the volume is mounted, and the page cache sits above it.
+
+User space: udev, or the desktop daemon, publishes the event. nautilus had registered for it with an asynchronous mechanism, epoll, inotify or a netlink socket, so it is not blocked: the kernel marks its file descriptor ready, nautilus is woken, reads the event and displays the new volume.
+
+The drawing must show the hardware boundary at the host controller with the interrupt crossing it, the kernel and user space boundary with the event delivery crossing it, and nautilus clearly in user space waiting on a descriptor rather than blocked on a read.
+
+Meta-information
+================
+extype: string
+exsolution: USB controller, enumeration, usb-storage, block layer, udev, epoll
+exauthor: Tom Barbette
+expoints: 4
+exsection: I/O
+extags: 2025-01|io

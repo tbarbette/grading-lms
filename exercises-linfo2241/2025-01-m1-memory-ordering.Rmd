@@ -1,0 +1,24 @@
+Question
+========
+x86 guarantees Total Store Ordering: every processor observes the stores of the others in a consistent order, which already provides the acquire-release relation for ordinary loads and stores, so the compiler emits no extra fence. ARM has a weak ordering model where stores to different locations need not be observed consistently, and stronger guarantees must be requested with explicit fences. Because the compiled x86 code no longer records which accesses needed acquire-release and which could be relaxed, emulating x86 on a weakly ordered machine is hard, and emulators such as QEMU end up inserting a fence after every memory instruction.
+
+(a) Generally speaking, why was it a big problem for Apple to switch from x86 to ARM?
+(b) Rosetta 2 translates x86 to ARM ahead of time, and the translated code is functionally equivalent. Regarding the text, what problem still persists?
+(c) Apple added a TSO mode to their ARM CPU for some processes. What would be the software-based alternative, and why is it bad?
+
+Solution
+========
+(a) The whole installed base of macOS software was compiled for x86, so it had to keep running on a machine with a different ISA and, more subtly, a different memory consistency model. Recompiling is not enough for the software Apple does not control, so binaries have to be translated, and a translation that is correct instruction by instruction is still not correct if the two machines order memory differently.
+
+(b) Functional equivalence of each instruction is not enough. The x86 binary silently relied on TSO: multi-threaded code that is correct on x86 may have no explicit fence at all, because TSO already gave it acquire-release for free. Translated one to one to ARM, whose model is weak, those stores may now become visible out of order to another core, and the program breaks. The information about which accesses needed ordering was lost at compile time and cannot be recovered from the binary.
+
+(c) The software alternative is to be conservative and insert a barrier after every memory access, as QEMU does, since the optimal placement is undecidable. It is correct but very costly: fences serialise the memory pipeline and destroy exactly the reordering freedom that makes the weak model fast, so the emulated code becomes several times slower. Apple instead made the hardware switch to TSO for translated processes, which costs nothing at run time and keeps the native processes on the fast weak model.
+
+Meta-information
+================
+extype: string
+exsolution: TSO vs weak ordering, lost information, fences everywhere too slow
+exauthor: Tom Barbette
+expoints: 3
+exsection: Memory model
+extags: 2025-01|memory-model|arm

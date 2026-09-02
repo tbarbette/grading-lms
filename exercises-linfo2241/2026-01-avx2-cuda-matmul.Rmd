@@ -1,0 +1,36 @@
+Question
+========
+Using AVX2 or CUDA as you prefer, write a cache-aligned matrix multiplication, as done in phase 4 of the project.
+
+Solution
+========
+An AVX2 version, assuming square matrices of float of size n, n a multiple of 8, and all three matrices allocated 32-byte aligned with `aligned_alloc` or `_mm_malloc`:
+
+    // Assumes n % 8 == 0 and A, B, C are 32-byte aligned.
+    // B is accessed row-wise so that the inner loop is contiguous.
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j += 8)
+            _mm256_store_ps(&C[i*n + j], _mm256_setzero_ps());
+        for (int k = 0; k < n; k++) {
+            __m256 a = _mm256_set1_ps(A[i*n + k]);   // broadcast one scalar
+            for (int j = 0; j < n; j += 8) {
+                __m256 b = _mm256_load_ps(&B[k*n + j]);
+                __m256 c = _mm256_load_ps(&C[i*n + j]);
+                c = _mm256_fmadd_ps(a, b, c);        // c += a * b
+                _mm256_store_ps(&C[i*n + j], c);
+            }
+        }
+    }
+
+The points that matter: the loop order is i, k, j and not i, j, k, so that the innermost loop walks a row of B and a row of C contiguously instead of striding down a column of B; the scalar of A is broadcast once per k; aligned load and store are used rather than the unaligned variants, which is what the alignment buys; and the accumulation happens in a vector register.
+
+A blocked version, tiling i, j and k so that a tile of B stays in L1, is the next step and is what actually gives the large speedup on big matrices.
+
+Meta-information
+================
+extype: string
+exsolution: i-k-j order, broadcast A, aligned load/store, fmadd
+exauthor: Tom Barbette
+expoints: 2
+exsection: SIMD
+extags: 2026-01|simd|project

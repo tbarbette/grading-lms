@@ -1,0 +1,60 @@
+% Minimal AMC exam source, validated end-to-end with `auto-multiple-choice
+% prepare` inside the amc-spike Docker image (see ../README.md).
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais,bloc]{automultiplechoice}
+
+\begin{document}
+\baremeDefautS{b=1,m=0}
+
+\element{groupe}{
+\begin{question}{addition}
+Combien font 2+2 ?
+\begin{choices}
+\wrongchoice{3}
+\correctchoice{4}
+\wrongchoice{5}
+\end{choices}
+\end{question}
+}
+
+% "explain" is deliberately NOT a \questionouverte: AMC does not track/capture
+% questionouverte zones at all. Making a choice's tickbox itself big (via
+% \AMCboxDimensions) gets it auto-captured/cropped by AMC's existing checkbox
+% pipeline, so the LLM grading step can read the crop back from capture.sqlite
+% instead of needing a manual upload (see wrapper/zones.py).
+% IMPORTANT (found by bisection, see README "Limitations connues"): AMC's
+% OMR detector crashes if a single box is wider than ~3.5cm (height is NOT
+% limited the same way -- 3cm x 8cm works fine). So a "big" free-text answer
+% area is built as 3 side-by-side boxes (choiceshoriz), each under the width
+% limit, later stitched back into one wide image by wrapper/zones.py.
+% A single-choice question needs exactly one \correctchoice (AMC rejects an
+% all-\wrongchoice question as "not coherent"); scoring is set to 0 since the
+% real grade for this question comes from the rubric/LLM layer, not AMC's OMR.
+\element{groupe2}{
+\begin{question}{explain}
+\scoring{b=0,m=0}
+Expliquez votre raisonnement :
+\AMCboxDimensions{shape=square,width=3cm,height=4cm,cross=false}
+\begin{choiceshoriz}
+\correctchoice{}
+\wrongchoice{}
+\wrongchoice{}
+\end{choiceshoriz}
+\AMCboxDimensions{shape=square,size=2.5ex,down=.4ex,rule=.5pt,outsidesep=.1em,color=black,cross,crosschar,crossrule}
+\vspace*{4.2cm}
+\end{question}
+}
+
+\onecopy{3}{
+
+\namefield{\fbox{\hspace{1cm}\vspace{2cm}}}
+
+\begin{center}\bf Examen de test\end{center}
+
+\insertgroup{groupe}
+
+\insertgroup{groupe2}
+
+}
+\end{document}

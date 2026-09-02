@@ -1,0 +1,31 @@
+Question
+========
+Draw the schematic of what happens when an SSH terminal receives the information that a key has been pressed.
+
+The SSH session was established before, and the process was doing nothing when the NIC received the packet.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,84,20,99); text(10.5,91,"NIC",cex=.85)
+rect(22,1,99,99); text(88,95,"Computer",cex=.85)
+```
+
+Solution
+========
+1. The frame arrives at the NIC, which DMAs it into a receive buffer posted by the driver and raises an interrupt.
+2. The interrupt handler acknowledges the device and defers the work to a softirq or NAPI poll.
+3. The softirq runs the TCP/IP stack, which checks and strips the headers and appends the payload to the receive buffer of the socket belonging to the ssh process.
+4. That append wakes the ssh process, which was blocked in read or in a poll variant on that socket, moving it to the run queue.
+5. The scheduler elects it, the system call resumes and copies the bytes into the user buffer.
+6. ssh decrypts the byte and writes it to the terminal, which is another I/O path down to the display.
+
+The drawing must show the NIC as hardware, DMA and the interrupt as the hardware to kernel crossing, the driver, the stack and the socket buffer in the kernel, the process in user space, and the wake up plus the system call return as the kernel to user crossing.
+
+Meta-information
+================
+extype: string
+exsolution: DMA, IRQ, softirq, stack, socket, wake up, copy
+exauthor: Tom Barbette
+expoints: 4
+exsection: I/O
+extags: 2024-09|io|networking

@@ -1,0 +1,26 @@
+Question
+========
+A system has a 32-bit physical address space and 4 KByte pages. The page table holds: entry 0 frame 28 (P=1, R/W=1, U=1), entry 1 (P=0), entry 2 frame 33 (P=1, R/W=0, U=0), entry 3 frame 100 (P=1, R/W=0, U=1), entry 4 (P=0), entry 5 frame 4007 (P=1, R/W=0, U=1), entry 6 frame 712 (P=1, R/W=0, U=1).
+
+Give the physical address in hexadecimal, or -1 on error, for: (a) a read at 0x5086, (b) a write at 0x1001, (c) a read at 0x62C8. Then give the state of the initially empty 4-row 4-way TLB after a read at 0x5014.
+
+Solution
+========
+With 4 KB pages the offset is the low 12 bits and the page number is the rest.
+
+(a) 0x5086: page 5, offset 0x086. Entry 5 is present, readable, user accessible, frame 4007 = 0xFA7. Physical address 0xFA7086.
+
+(b) 0x1001: page 1, P=0, so page fault: -1.
+
+(c) 0x62C8: page 6, offset 0x2C8. Entry 6 is present, frame 712 = 0x2C8. Physical address 0x2C82C8.
+
+TLB: the access at 0x5014 is page 5. With 4 rows the row is 5 mod 4 = 1 and the tag is 5 div 4 = 1. So row 1 gets one valid entry with tag 0x1 and frame 0xFA7; every other slot stays empty.
+
+Meta-information
+================
+extype: string
+exsolution: 0xFA7086, -1, 0x2C82C8, TLB row 1 tag 1 frame 0xFA7
+exauthor: Tom Barbette
+expoints: 5
+exsection: Virtual memory
+extags: 2024-09|virtual-memory

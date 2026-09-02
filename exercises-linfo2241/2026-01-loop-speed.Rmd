@@ -1,0 +1,35 @@
+Question
+========
+What can improve the speed of a loop?
+
+
+Answerlist
+----------
+* Unrolling
+* Memory prefetcher
+* Branch prefetcher
+* TLB
+* Return address predictor
+
+Solution
+========
+Unrolling removes part of the loop overhead and exposes more independent instructions to the pipeline. The memory prefetcher recognises the regular access pattern of the loop and brings the data in before it is requested.
+
+Answerlist
+----------
+* 1. Fewer branches and comparisons per element, and more instruction level parallelism.
+* 1. The regular access pattern of a loop is exactly what the hardware prefetcher detects.
+* 0. The structure predicting branches is a branch predictor, and it is not what speeds up the body of the loop.
+* 0. The TLB caches translations; it does not speed up the loop itself.
+* 0. That structure targets function returns, not loops.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: mchoice
+exsolution: 11000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Optimization
+extags: 2026-01|optimization

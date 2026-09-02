@@ -1,0 +1,33 @@
+Question
+========
+A 4-way set associative cache with 128 rows requires how many tag comparators?
+
+
+Answerlist
+----------
+* 4
+* 128
+* 512
+* 1
+
+Solution
+========
+The row index selects a single row, and inside that row the tags of the ways are compared in parallel. Only the associativity matters, so 4 comparators are needed, whatever the number of rows.
+
+Answerlist
+----------
+* 1. One comparator per way; the number of rows does not matter.
+* 0. The row is selected by decoding the index, not by comparing every row.
+* 0. This would be one comparator per cacheline of the whole cache.
+* 0. A single comparator would force the ways to be checked one after the other.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 1000
+exauthor: Tom Barbette
+expoints: 1
+exsection: Caches
+extags: 2025-08|caches|converted-to-mcq

@@ -1,0 +1,20 @@
+Question
+========
+What is the worst case actual useful size of a 4-way associative cache of 128 lines of 32 bytes?
+
+Solution
+========
+The nominal capacity is 128 x 32 = 4096 bytes, spread over 128/4 = 32 rows.
+
+In the worst case every address of the working set maps to the same row, so only the 4 ways of that single row are ever usable: 4 x 32 = 128 bytes.
+
+This is the pathological case of a stride that is a multiple of the number of rows times the line size, and it is exactly why associativity exists at all.
+
+Meta-information
+================
+extype: string
+exsolution: 128 bytes
+exauthor: Tom Barbette
+expoints: 2
+exsection: Caches
+extags: 2024-09|caches

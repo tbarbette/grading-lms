@@ -1,0 +1,35 @@
+Question
+========
+Draw the schematic of what happens when a process calls read() on a file.
+
+Show the main hardware, CPU, memory and storage device, and the main software components: process, kernel VFS layer, filesystem driver, block device driver. Indicate where caching can occur, page cache and device cache, and the operating system boundaries. Name the two sides of the dashed line.
+
+```{r, echo=FALSE, fig.width=6.6, fig.height=5.4}
+par(mar=c(0,0,0,0)); plot.new(); plot.window(c(0,100),c(0,100))
+rect(1,64,99,99); text(88,95,"Computer Hardware",cex=.8)
+rect(1,1,99,60);  text(88,56,"Computer Software",cex=.8)
+segments(1,30,99,30,lty=2)
+```
+
+Solution
+========
+The two sides of the dashed line are user space above and kernel space below.
+
+1. The process calls read(), which traps into the kernel: this is the user to kernel boundary crossing.
+2. VFS resolves the file descriptor to an inode and dispatches to the right filesystem.
+3. VFS first looks in the page cache. On a hit the data is copied straight to the user buffer and the call returns, without ever touching the device: this is the most important cache on the path.
+4. On a miss the filesystem driver translates the file offset into logical block numbers.
+5. The block layer queues the request, merges and schedules it, and the device driver programs the device.
+6. The device may itself serve the request from its own internal cache, otherwise it reads the medium. It DMAs the data into memory and raises an interrupt on completion.
+7. The page cache is populated, the data is copied into the user buffer, the process is woken and the call returns.
+
+The drawing must place the CPU, memory and the storage device in the hardware box, the process in user space, VFS, page cache, filesystem, block layer and driver in kernel space, and mark the two caches plus the DMA and interrupt arrows.
+
+Meta-information
+================
+extype: string
+exsolution: user/kernel, VFS, page cache, FS, block, driver, DMA, device cache
+exauthor: Tom Barbette
+expoints: 4
+exsection: I/O
+extags: 2025-08|io|storage

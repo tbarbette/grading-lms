@@ -1,0 +1,33 @@
+Question
+========
+A program spends 30 percent of its time in a part that cannot be parallelized. According to Amdahl's law, what is the maximum speedup with an infinite number of cores?
+
+
+Answerlist
+----------
+* 1.43x
+* 3.33x
+* 10x
+* Unbounded
+
+Solution
+========
+With an infinite number of cores the parallel part takes no time at all and only the serial fraction remains: speedup = 1 / 0.3 = 3.33.
+
+Answerlist
+----------
+* 0. This would correspond to a serial fraction of 70 percent.
+* 1. 1 divided by the 0.3 serial fraction.
+* 0. This would correspond to a serial fraction of 10 percent.
+* 0. Amdahl's law is precisely the statement that the speedup is bounded.
+
+Meta-information
+================
+exextra[convert,numeric]: 1
+exextra[rmdExport,numeric]: 1
+extype: schoice
+exsolution: 0100
+exauthor: Tom Barbette
+expoints: 1
+exsection: Parallelism
+extags: 2026-08|parallelism|amdahl
